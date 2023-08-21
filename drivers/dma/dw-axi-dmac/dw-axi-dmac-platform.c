@@ -1262,6 +1262,16 @@ static int dma_chan_pause(struct dma_chan *dchan)
 
 	spin_unlock_irqrestore(&chan->vc.lock, flags);
 
+	chan->ch_sar = axi_chan_ioread32(chan, CH_SAR);
+	chan->ch_dar = axi_chan_ioread32(chan, CH_DAR);
+	chan->ch_dar_h = axi_chan_ioread32(chan, CH_DAR_H);
+	chan->ch_block_ts = axi_chan_ioread32(chan, CH_BLOCK_TS);
+	chan->ch_ctl_l = axi_chan_ioread32(chan, CH_CTL_L);
+	chan->ch_ctl_h = axi_chan_ioread32(chan, CH_CTL_H);
+	chan->ch_cfg_l = axi_chan_ioread32(chan, CH_CFG_L);
+	chan->ch_cfg_h = axi_chan_ioread32(chan, CH_CFG_H);
+	chan->ch_llp = axi_chan_ioread32(chan, CH_LLP);
+
 	return timeout ? 0 : -EAGAIN;
 }
 
@@ -1269,6 +1279,22 @@ static int dma_chan_pause(struct dma_chan *dchan)
 static inline void axi_chan_resume(struct axi_dma_chan *chan)
 {
 	u64 val;
+	u32 irq_mask;
+
+	axi_chan_iowrite32(chan, CH_SAR, chan->ch_sar);
+	axi_chan_iowrite32(chan, CH_DAR, chan->ch_dar);
+	axi_chan_iowrite32(chan, CH_DAR_H, chan->ch_dar_h);
+	axi_chan_iowrite32(chan, CH_BLOCK_TS, chan->ch_block_ts);
+	axi_chan_iowrite32(chan, CH_CTL_L, chan->ch_ctl_l);
+	axi_chan_iowrite32(chan, CH_CTL_H, chan->ch_ctl_h);
+	axi_chan_iowrite32(chan, CH_CFG_L, chan->ch_cfg_l);
+	axi_chan_iowrite32(chan, CH_CFG_H, chan->ch_cfg_h);
+	axi_chan_iowrite32(chan, CH_LLP, chan->ch_llp);
+	irq_mask = DWAXIDMAC_IRQ_DMA_TRF | DWAXIDMAC_IRQ_ALL_ERR;
+	axi_chan_irq_sig_set(chan, irq_mask);
+	/* Generate 'suspend' status but don't generate interrupt */
+	irq_mask |= DWAXIDMAC_IRQ_SUSPENDED;
+	axi_chan_irq_set(chan, irq_mask);
 
 	if (chan->chip->dw->hdata->nr_channels >= DMAC_CHAN_16) {
 		val = axi_dma_ioread64(chan->chip, DMAC_CHSUSPREG);
@@ -1296,7 +1322,11 @@ static inline void axi_chan_resume(struct axi_dma_chan *chan)
 		}
 	}
 
+	axi_chan_enable(chan);
+
 	chan->is_paused = false;
+
+	return;
 }
 
 static int dma_chan_resume(struct dma_chan *dchan)
