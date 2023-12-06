@@ -52,13 +52,13 @@
 };
 
 &emmc {
-	bus-width = <8>;
-	max-frequency = <198000000>;
-	mmc-hs400-1_8v;
-	non-removable;
-	no-sdio;
-	no-sd;
-	status = "okay";
+       bus-width = <8>;
+       max-frequency = <198000000>;
+       mmc-hs400-1_8v;
+       non-removable;
+       no-sdio;
+       no-sd;
+       status = "okay";
 };
 
 &sdio0 {
