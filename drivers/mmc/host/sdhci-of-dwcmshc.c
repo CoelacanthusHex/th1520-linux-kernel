@@ -1221,7 +1221,7 @@ static const struct of_device_id sdhci_dwcmshc_dt_ids[] = {
 		.data = &sdhci_dwcmshc_cv18xx_pdata,
 	},
 	{
-		.compatible = "thead,th1520-dwcmshc",
+		.compatible = "xuantie,th1520-dwcmshc",
 		.data = &sdhci_dwcmshc_th1520_pdata,
 	},
 	{},

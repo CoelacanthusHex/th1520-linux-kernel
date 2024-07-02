@@ -36,4 +36,4 @@ obj-y				+= qcom/
 obj-y				+= smccc/
 obj-y				+= tegra/
 obj-y				+= xilinx/
-obj-y				+= thead/
+obj-y				+= xuantie/
