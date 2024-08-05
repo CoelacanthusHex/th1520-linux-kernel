@@ -86,13 +86,13 @@ static int xuantie_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 
 			val |= XUANTIE_PWM_CTRL_CFG_UPDATE;
 			writel(val, priv->mmio_base + XUANTIE_PWM_CTRL(pwm->hwpwm));
-			pm_runtime_put_sync(chip->dev);
+			pm_runtime_put_sync(&chip->dev);
 		}
 		return 0;
 	}
 
 	if (!pwm->state.enabled) {
-		ret = pm_runtime_resume_and_get(chip->dev);
+		ret = pm_runtime_resume_and_get(&chip->dev);
 		if (ret < 0)
 			return ret;
 	}
@@ -149,7 +149,7 @@ static int xuantie_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
 	u32 val;
 	int ret;
 
-	ret = pm_runtime_resume_and_get(chip->dev);
+	ret = pm_runtime_resume_and_get(&chip->dev);
 	if (ret < 0)
 		return ret;
 
@@ -172,7 +172,7 @@ static int xuantie_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
 	 */
 	state->duty_cycle = DIV64_U64_ROUND_UP((u64)val * NSEC_PER_SEC, rate);
 
-	pm_runtime_put_sync(chip->dev);
+	pm_runtime_put_sync(&chip->dev);
 
 	return 0;
 }
@@ -224,7 +224,7 @@ static int xuantie_pwm_probe(struct platform_device *pdev)
 		return PTR_ERR(priv->clk);
 
 	priv->chip.ops = &xuantie_pwm_ops;
-	priv->chip.dev = &pdev->dev;
+	priv->chip.dev = pdev->dev;
 	priv->chip.npwm = XUANTIE_PWM_MAX_NUM;
 
 	/* check whether PWM is ever started or not */
