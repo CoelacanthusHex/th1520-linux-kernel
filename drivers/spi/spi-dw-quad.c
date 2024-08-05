@@ -225,7 +225,7 @@ static void __maybe_unused set_cs(struct spi_device *spi, bool enable)
 		chip->cs_control(!enable);
 
 	if (!enable)
-		dw_writel(dws, DW_SPI_SER, BIT(spi->chip_select));
+		dw_writel(dws, DW_SPI_SER, BIT((unsigned long)spi->chip_select));
 	else if (dws->cs_override)
 		dw_writel(dws, DW_SPI_SER, 0);
 }
