@@ -372,7 +372,7 @@ static int th1520_dwmac_probe(struct platform_device *pdev)
 		return dev_err_probe(&pdev->dev, ret,
 				     "failed to get resources\n");
 
-	plat = stmmac_probe_config_dt(pdev, stmmac_res.mac);
+	plat = devm_stmmac_probe_config_dt(pdev, stmmac_res.mac);
 	if (IS_ERR(plat))
 		return dev_err_probe(&pdev->dev, PTR_ERR(plat),
 				     "dt configuration failed\n");
@@ -433,7 +433,6 @@ err_exit:
 	dev_err(dev,"%s: dwmac probe faild,ret%d\n",__func__,ret);
 	th1520_dwmac_clk_disable(pdev, dwmac);
 err_remove_config_dt:
-	stmmac_remove_config_dt(pdev, plat);
 	return ret;
 }
 /**
