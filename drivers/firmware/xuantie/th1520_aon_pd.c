@@ -17,6 +17,7 @@
 #include <linux/pm_domain.h>
 #include <linux/seq_file.h>
 #include <linux/slab.h>
+#include <linux/vmalloc.h>
 
 struct th1520_aon_msg_req_set_resource_power_mode {
 	struct th1520_aon_rpc_msg_hdr hdr;
