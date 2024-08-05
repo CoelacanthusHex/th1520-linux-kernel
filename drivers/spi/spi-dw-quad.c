@@ -407,7 +407,7 @@ static void qspi_hw_init(struct device *dev, struct dw_spi *dws)
 
 static int dw_qspi_adjust_op_size(struct spi_mem *mem, struct spi_mem_op *op)
 {
-	struct dw_spi *dws = spi_controller_get_devdata(mem->spi->master);
+	struct dw_spi *dws = spi_controller_get_devdata(mem->spi->controller);
 	/* dw spi's rx and tx have the same fifo depth */
 
 	if (op->data.dir == SPI_MEM_DATA_OUT && op->data.nbytes >= ((dws->fifo_len -2)<<2) ) {
@@ -434,7 +434,7 @@ static int dw_qspi_check_buswidth(struct dw_spi *dws, u8 width)
 }
 static bool dw_qspi_supports_op(struct spi_mem *mem, const struct spi_mem_op *op)
 {
-	struct dw_spi *dws = spi_controller_get_devdata(mem->spi->master);
+	struct dw_spi *dws = spi_controller_get_devdata(mem->spi->controller);
 	int ret=0;
 	u32 temp_len;
 	/* check buswidth */
@@ -506,7 +506,7 @@ static bool dw_qspi_can_xfer_32bits_frame(const struct spi_mem_op *op)
 
 static int dw_qspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
 {
-	struct dw_spi *dws = spi_controller_get_devdata(mem->spi->master);
+	struct dw_spi *dws = spi_controller_get_devdata(mem->spi->controller);
 	struct spi_device *spi = mem->spi;
 	struct chip_data *chip = spi_get_ctldata(mem->spi);
 	int	ret = 0;
