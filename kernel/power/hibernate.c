@@ -769,10 +769,20 @@ static int load_image_and_restore(void)
 	}
 
 	error = swsusp_read(&flags);
-	swsusp_close();
-	if (!error)
-		error = hibernation_restore(flags & SF_PLATFORM_MODE);
-
+	if (error == -ENODATA) { //if is crc error of image ,reboot retry
+		if(0 == swsusp_mark_sign_retry()) { //can retry
+			pr_warn("WARN:Image load error,reboot retry...\n");
+			swsusp_close();
+			kernel_restart(NULL);
+		}
+		else //reach the retry max times
+			swsusp_close();
+	}
+	else {
+		swsusp_close();
+		if (!error)
+			error = hibernation_restore(flags & SF_PLATFORM_MODE);
+	}
 	pr_err("Failed to load image, recovering.\n");
 	swsusp_free();
 	free_basic_memory_bitmaps();
