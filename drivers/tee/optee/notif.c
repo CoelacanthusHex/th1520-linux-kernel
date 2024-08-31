@@ -11,6 +11,7 @@
 #include <linux/spinlock.h>
 #include <linux/tee_core.h>
 #include "optee_private.h"
+#include <linux/freezer.h>
 
 struct notif_entry {
 	struct list_head link;
@@ -74,7 +75,8 @@ int optee_notif_wait(struct optee *optee, u_int key, u32 timeout)
 		if (!wait_for_completion_timeout(&entry->c, timeout))
 			rc = -ETIMEDOUT;
 	} else {
-		wait_for_completion(&entry->c);
+		while (wait_for_completion_interruptible(&entry->c))
+			try_to_freeze();
 	}
 	spin_lock_irqsave(&optee->notif.lock, flags);
 

@@ -15,6 +15,9 @@
 #include <linux/tee_core.h>
 #include <linux/types.h>
 #include "optee_private.h"
+#include <linux/suspend.h>
+
+extern struct kref sess_refcount;
 
 static void optee_bus_scan(struct work_struct *work)
 {
@@ -57,6 +60,15 @@ int optee_open(struct tee_context *ctx, bool cap_memref_null)
 	ctx->cap_memref_null = cap_memref_null;
 	ctx->data = ctxdata;
 	return 0;
+}
+
+static void session_release(struct kref *ref)
+{
+}
+
+void session_put(void)
+{
+	kref_put(&sess_refcount, session_release);
 }
 
 static void optee_release_helper(struct tee_context *ctx,
@@ -114,6 +126,47 @@ void optee_remove_common(struct optee *optee)
 	optee_supp_uninit(&optee->supp);
 	mutex_destroy(&optee->call_queue.mutex);
 }
+
+#ifdef CONFIG_PM
+#ifdef CONFIG_SUSPEND
+static int __maybe_unused tee_driver_suspend(struct device *dev)
+{
+    int ret = 0;
+	unsigned int ref_count;
+
+	if (pm_suspend_target_state == PM_SUSPEND_MEM) {
+		pr_info("STR mode suspend in\r\n");
+		return 0;
+	} else {
+		ref_count = kref_read(&sess_refcount);
+		if (ref_count > 1) {
+			pr_info("tee_driver_suspend failed[%d] \r\n", ref_count);
+			ret = -1;
+		} else {
+			pr_info("tee_driver_suspend success[%d] \r\n", ref_count);
+			ret = 0;
+		}
+	}
+
+	return ret;
+}
+
+static int __maybe_unused tee_driver_resume(struct device *dev)
+{
+
+	int ret = 0;
+
+	return ret;
+}
+#else
+#define tee_driver_suspend NULL
+#define tee_driver_resume NULL
+#endif
+
+static const struct dev_pm_ops tee_driver_pm_ops = {
+    SET_SYSTEM_SLEEP_PM_OPS(tee_driver_suspend, tee_driver_resume)
+};
+#endif
 
 static int smc_abi_rc;
 static int ffa_abi_rc;
