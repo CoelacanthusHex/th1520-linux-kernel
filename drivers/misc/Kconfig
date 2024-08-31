@@ -600,6 +600,22 @@ config MARVELL_CN10K_DPI
 	  To compile this driver as a module, choose M here: the module
 	  will be called mrvl_cn10k_dpi.
 
+config TH1520_DSMART_CARD
+	  tristate "XUANTIE TH1520 DCD SMART CARD driver following ISO7816 protocol"
+	  default n
+	help
+	  The XUANTIE TH1520 DCD SMART CARD IP driver is designed to follow the
+	  ISO7816 protocol, which is a widely used standard for smart cards,
+	  including various types of IC cards and identity verification methods.
+
+	  This driver enables support for the DCD SMART CARD IP on XUANTIE TH1520 SoCs.
+	  By enabling this configuration option, the kernel will include the necessary
+	  code to interface with the smart card hardware as specified in the ISO7816
+	  protocol specifications.
+
+	  This driver can also be built as a module.  If so, the module
+	  will be called iso7816-card-drv.
+
 source "drivers/misc/c2port/Kconfig"
 source "drivers/misc/eeprom/Kconfig"
 source "drivers/misc/cb710/Kconfig"
