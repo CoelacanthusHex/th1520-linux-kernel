@@ -943,7 +943,10 @@ static int i2c_hid_core_suspend(struct i2c_hid *ihid, bool force_poweroff)
 	if (!(ihid->quirks & I2C_HID_QUIRK_NO_SLEEP_ON_SUSPEND))
 		i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
 
-	disable_irq(client->irq);
+	// disable_irq(client->irq);
+
+	if (device_may_wakeup(&client->dev))
+		enable_irq_wake(client->irq);
 
 	if (force_poweroff || !device_may_wakeup(&client->dev))
 		i2c_hid_core_power_down(ihid);
@@ -960,7 +963,10 @@ static int i2c_hid_core_resume(struct i2c_hid *ihid)
 	if (!device_may_wakeup(&client->dev))
 		i2c_hid_core_power_up(ihid);
 
-	enable_irq(client->irq);
+	if (device_may_wakeup(&client->dev))
+		disable_irq_wake(client->irq);
+
+	// enable_irq(client->irq);
 
 	/* Make sure the device is awake on the bus */
 	ret = i2c_hid_probe_address(ihid);
@@ -1250,6 +1256,9 @@ int i2c_hid_core_probe(struct i2c_client *client, struct i2chid_ops *ops,
 		ret = i2c_hid_core_register_hid(ihid);
 	if (ret)
 		goto err_free_irq;
+
+	if (client->dev.of_node && of_property_read_bool(client->dev.of_node, "wakeup-source"))
+		device_init_wakeup(&client->dev, 1);
 
 	return 0;
 
