@@ -274,7 +274,8 @@ static inline void riscv_v_vstate_save(struct __riscv_v_ext_state *vstate,
 	ALT_SR_VS(sr_vs_dirty, SR_VS_DIRTY);
 
 	if ((regs->status & sr_vs) == sr_vs_dirty) {
-		__riscv_v_vstate_save(vstate, vstate->datap);
+		if (vstate->datap)
+			__riscv_v_vstate_save(vstate, vstate->datap);
 		__riscv_v_vstate_clean(regs);
 	}
 }
@@ -287,7 +288,8 @@ static inline void riscv_v_vstate_restore(struct __riscv_v_ext_state *vstate,
 	ALT_SR_VS(sr_vs, SR_VS);
 
 	if ((regs->status & sr_vs) != SR_VS_OFF) {
-		__riscv_v_vstate_restore(vstate, vstate->datap);
+		if (vstate->datap)
+			__riscv_v_vstate_restore(vstate, vstate->datap);
 		__riscv_v_vstate_clean(regs);
 	}
 }
