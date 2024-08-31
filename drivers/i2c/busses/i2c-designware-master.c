@@ -658,6 +658,7 @@ static void i2c_dw_process_transfer(struct dw_i2c_dev *dev, unsigned int stat, u
 	if (stat & DW_IC_INTR_RX_OVER) {
 		/* Anytime RX_OVER is set, Make sure to skip them.*/
 		__i2c_dw_write_intr_mask(dev, 0);
+		dev->status |= STATUS_READ_IN_PROGRESS;
 		goto tx_aborted;
 	}
 
