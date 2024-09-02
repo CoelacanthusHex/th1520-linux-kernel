@@ -42,7 +42,7 @@ static int __maybe_unused get_pages(unsigned int nr_page, struct vs_gem_object *
 		order = get_order(num_page * PAGE_SIZE);
 		num_page = 1 << order;
 
-		if ((num_page + page_count > nr_page) || (order >= MAX_ORDER)) {
+		if ((num_page + page_count > nr_page) || (order >= MAX_PAGE_ORDER)) {
 			num_page = num_page >> 1;
 			continue;
 		}
