@@ -165,7 +165,7 @@ static ssize_t log_show(struct kobject *kobj, struct kobj_attribute *attr, char 
 			is_current_master ? 'y' : 'n',
 			priv->authenticated ? 'y' : 'n',
 			// from_kuid_munged(seq_user_ns(m), uid)
-			uid,
+			uid.val,
 			priv->magic);
 		rcu_read_unlock();
 	}
