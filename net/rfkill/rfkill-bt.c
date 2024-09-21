@@ -194,7 +194,7 @@ fail_gpio:
 	return ret;
 }
 
-static int rfkill_remove(struct platform_device *pdev)
+static void rfkill_remove(struct platform_device *pdev)
 {
 	struct rfkill_bt_data *rfkill = platform_get_drvdata(pdev);
 
@@ -206,8 +206,6 @@ static int rfkill_remove(struct platform_device *pdev)
 		gpio_free(rfkill->pdata->power_n.io);
 
 	g_rfkill = NULL;
-
-	return 0;
 }
 
 #ifdef CONFIG_OF
