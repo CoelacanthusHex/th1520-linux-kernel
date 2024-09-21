@@ -6,6 +6,7 @@
 
 #include <linux/rfkill.h>
 #include <linux/delay.h>
+#include <linux/platform_device.h>
 #include <dt-bindings/gpio/gpio.h>
 #include "../../drivers/gpio/gpiolib-of.h"
 #ifdef CONFIG_OF
