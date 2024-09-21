@@ -1169,10 +1169,10 @@ GFP_Alloc(
         {
             int order = get_order(bytes);
 
-            if (order >= MAX_ORDER)
+            if (order >= MAX_PAGE_ORDER)
             {
                 pr_err("Too big buffer size requested. (order %d >= max %d)\n",
-                    order, MAX_ORDER);
+                    order, MAX_PAGE_ORDER);
                 status = ENOMEM;
                 goto OnError;
             }
