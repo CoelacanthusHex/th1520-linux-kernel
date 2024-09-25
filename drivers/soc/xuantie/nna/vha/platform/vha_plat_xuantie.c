@@ -228,13 +228,11 @@ out_add_dev:
 	return ret;
 }
 
-static int vha_plat_remove(struct platform_device *ofdev)
+static void vha_plat_remove(struct platform_device *ofdev)
 {
 	vha_rm_dev(&ofdev->dev);
 
 	vha_plat_dt_hw_destroy(ofdev);
-
-	return 0;
 }
 
 #ifdef CONFIG_PM
