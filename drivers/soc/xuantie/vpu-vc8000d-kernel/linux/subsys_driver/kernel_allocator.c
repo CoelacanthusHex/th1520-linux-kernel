@@ -63,6 +63,7 @@
 #include <linux/dma-buf.h>
 #include <linux/mm_types.h>
 #include <linux/version.h>
+#include <linux/vmalloc.h>
 #include <linux/module.h>
 #include "kernel_allocator.h"
 
