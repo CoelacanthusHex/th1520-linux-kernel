@@ -639,7 +639,6 @@ static int backlight_update(struct backlight_device *bd)
 	int brightness = bd->props.brightness;
 
 	if (bd->props.power != FB_BLANK_UNBLANK ||
-		bd->props.fb_blank != FB_BLANK_UNBLANK ||
 		(bd->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK))) {
 			brightness = 0;
 		}
