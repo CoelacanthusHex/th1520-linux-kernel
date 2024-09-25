@@ -1544,13 +1544,9 @@ static struct miscdevice virtio_vdmabuf_miscdev = {
 
 static int virtio_vdmabuf_probe(struct virtio_device *vdev)
 {
-	vq_callback_t *cbs[] = {
-		virtio_vdmabuf_recv_cb,
-		virtio_vdmabuf_send_cb,
-	};
-	static const char *const names[] = {
-		"recv",
-		"send",
+	struct virtqueue_info vqs_info[] = {
+		{ "recv", virtio_vdmabuf_recv_cb },
+		{ "send", virtio_vdmabuf_send_cb },
 	};
 	struct virtio_vdmabuf *vdmabuf;
 	struct virtqueue *vq;
@@ -1574,7 +1570,7 @@ static int virtio_vdmabuf_probe(struct virtio_device *vdev)
 	spin_lock_init(&vdmabuf->msg_list_lock);
 
 	ret = virtio_find_vqs(vdmabuf->vdev, VDMABUF_VQ_MAX, vdmabuf->vqs,
-			      cbs, names, NULL);
+			      vqs_info, NULL);
 	if (ret) {
 		dev_err(drv_info->dev, "Cannot find any vqs\n");
 		return ret;
