@@ -219,8 +219,7 @@ static int th1520_mu_rpmsg_unregister_nb(struct th1520_rpmsg_vproc *rpdev,
 
 static struct virtqueue *rp_find_vq(struct virtio_device *vdev,
 				    unsigned int index,
-				    void (*callback)(struct virtqueue *vq),
-				    const char *name, bool ctx)
+				    struct virtqueue_info vqs_info)
 {
 	struct th1520_virdev *virdev = to_th1520_virdev(vdev);
 	struct th1520_rpmsg_vproc *rpdev =
@@ -254,8 +253,8 @@ static struct virtqueue *rp_find_vq(struct virtio_device *vdev,
 		 rpvq->addr);
 
 	vq = vring_new_virtqueue(index, RPMSG_NUM_BUFS / 2, RPMSG_VRING_ALIGN,
-				 vdev, true, ctx, rpvq->addr,
-				 th1520_rpmsg_notify, callback, name);
+				 vdev, true, false, rpvq->addr,
+				 th1520_rpmsg_notify, vqs_info.callback, vqs_info.name);
 	if (!vq) {
 		pr_err("th1520 rpmsg: vring_new_virtqueue failed\n");
 		err = -ENOMEM;
@@ -299,8 +298,7 @@ static void th1520_rpmsg_del_vqs(struct virtio_device *vdev)
 
 static int th1520_rpmsg_find_vqs(struct virtio_device *vdev, unsigned int nvqs,
 				 struct virtqueue *vqs[],
-				 vq_callback_t *callbacks[],
-				 const char *const names[], const bool *ctx,
+				 struct virtqueue_info vqs_infos[],
 				 struct irq_affinity *desc)
 {
 	struct th1520_virdev *virdev = to_th1520_virdev(vdev);
@@ -313,8 +311,7 @@ static int th1520_rpmsg_find_vqs(struct virtio_device *vdev, unsigned int nvqs,
 		return -EINVAL;
 
 	for (i = 0; i < nvqs; ++i) {
-		vqs[i] = rp_find_vq(vdev, i, callbacks[i], names[i],
-				    ctx ? ctx[i] : false);
+		vqs[i] = rp_find_vq(vdev, i, vqs_infos[i]);
 		if (IS_ERR(vqs[i])) {
 			err = PTR_ERR(vqs[i]);
 			goto error;
