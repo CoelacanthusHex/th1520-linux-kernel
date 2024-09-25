@@ -4,6 +4,7 @@ config DRM_VERISILICON
 	tristate "DRM Support for VeriSilicon"
 	depends on DRM
 	select DRM_KMS_HELPER
+	select DRM_TTM_HELPER
 	select VERISILICON_DW_MIPI_DSI
 	select VERISILICON_DW_HDMI_TH1520
 	help

@@ -14,7 +14,7 @@
 #include <drm/drm_probe_helper.h>
 #include <drm/drm_fb_helper.h>
 #include <drm/drm_framebuffer.h>
-#include <drm/drm_fbdev_generic.h>
+#include <drm/drm_fbdev_ttm.h>
 #include <drm/drm_modeset_helper.h>
 #include <drm/drm_drv.h>
 #include <drm/drm_file.h>
@@ -468,7 +468,7 @@ static int vs_drm_bind(struct device *dev)
 		goto err_drm_dev_register;
 	}
 
-	drm_fbdev_generic_setup(drm_dev, 32);
+	drm_fbdev_ttm_setup(drm_dev, 32);
 
 	return 0;
 
