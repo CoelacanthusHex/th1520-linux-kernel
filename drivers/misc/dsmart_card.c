@@ -1214,11 +1214,9 @@ static int dsmart_card_probe(struct platform_device *pdev)
 	return 0;
 }
 
-static int dsmart_card_remove(struct platform_device *pdev)
+static void dsmart_card_remove(struct platform_device *pdev)
 {
 	misc_deregister(&dsmart_card_dev);
-
-	return 0;
 }
 
 static const struct of_device_id dsmart_card_of_match[] = {

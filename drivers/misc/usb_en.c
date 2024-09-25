@@ -80,10 +80,9 @@ static int usb_en_probe(struct platform_device *pdev)
     return 0;
 }
 
-static int usb_en_remove(struct platform_device *pdev)
+static void usb_en_remove(struct platform_device *pdev)
 {
     printk("func: _________%s\n", __func__); 
-	return 0;
 }
 
 #ifdef CONFIG_PM_SLEEP
