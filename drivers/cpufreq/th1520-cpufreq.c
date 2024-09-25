@@ -550,7 +550,7 @@ put_node:
 	return ret;
 }
 
-static int th1520_cpufreq_remove(struct platform_device *pdev)
+static void th1520_cpufreq_remove(struct platform_device *pdev)
 {
 	cpufreq_unregister_driver(&th1520_cpufreq_driver);
 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
@@ -563,8 +563,6 @@ static int th1520_cpufreq_remove(struct platform_device *pdev)
 		th1520_system_monitor_unregister(mdev_info);
 #endif
 	clk_bulk_put(num_clks, clks);
-
-	return 0;
 }
 
 static const struct of_device_id th1520_cpufreq_match[] = {
