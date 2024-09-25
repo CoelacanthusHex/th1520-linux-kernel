@@ -1253,7 +1253,7 @@ static int dc_probe(struct platform_device *pdev)
 	return component_add(dev, &dc_component_ops);
 }
 
-static int dc_remove(struct platform_device *pdev)
+static void dc_remove(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 
@@ -1262,8 +1262,6 @@ static int dc_remove(struct platform_device *pdev)
 	pm_runtime_disable(dev);
 
 	dev_set_drvdata(dev, NULL);
-
-	return 0;
 }
 
 #ifdef CONFIG_PM

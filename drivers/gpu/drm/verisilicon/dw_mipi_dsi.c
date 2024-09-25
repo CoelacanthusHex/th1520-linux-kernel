@@ -1111,7 +1111,7 @@ host_unregister:
 	return ret;
 }
 
-static int dsi_remove(struct platform_device *pdev)
+static void dsi_remove(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct dw_mipi_dsi *dsi = dev_get_drvdata(dev);
@@ -1123,8 +1123,6 @@ static int dsi_remove(struct platform_device *pdev)
 	component_del(dev, &dsi_component_ops);
 
 	dev_set_drvdata(dev, NULL);
-
-	return 0;
 }
 
 #ifdef CONFIG_PM

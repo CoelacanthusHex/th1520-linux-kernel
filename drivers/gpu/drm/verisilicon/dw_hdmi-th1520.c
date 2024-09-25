@@ -156,11 +156,9 @@ static int dw_hdmi_th1520_probe(struct platform_device *pdev)
 	return component_add(&pdev->dev, &dw_hdmi_th1520_ops);
 }
 
-static int dw_hdmi_th1520_remove(struct platform_device *pdev)
+static void dw_hdmi_th1520_remove(struct platform_device *pdev)
 {
 	component_del(&pdev->dev, &dw_hdmi_th1520_ops);
-
-	return 0;
 }
 
 #ifdef CONFIG_PM
