@@ -522,13 +522,11 @@ static int th1520_mbox_probe(struct platform_device *pdev)
 	return devm_mbox_controller_register(dev, &priv->mbox);
 }
 
-static int th1520_mbox_remove(struct platform_device *pdev)
+static void th1520_mbox_remove(struct platform_device *pdev)
 {
 	struct th1520_mbox_priv *priv = platform_get_drvdata(pdev);
 
 	clk_disable_unprepare(priv->clk);
-
-	return 0;
 }
 
 static const struct of_device_id th1520_mbox_dt_ids[] = {
