@@ -251,11 +251,9 @@ static int th1520_event_probe(struct platform_device *pdev)
 	return 0;
 }
 
-static int th1520_event_remove(struct platform_device *pdev)
+static void th1520_event_remove(struct platform_device *pdev)
 {
 	misc_deregister(&th1520_event_misc);
-
-	return 0;
 }
 
 static const struct of_device_id th1520_event_of_match[] = {
