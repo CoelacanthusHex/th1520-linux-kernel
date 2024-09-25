@@ -500,7 +500,7 @@ error_adc_clk_enable:
 	return ret;
 }
 
-static int th1520_adc_remove(struct platform_device *pdev)
+static void th1520_adc_remove(struct platform_device *pdev)
 {
 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
 	struct th1520_adc *info = iio_priv(indio_dev);
@@ -509,8 +509,6 @@ static int th1520_adc_remove(struct platform_device *pdev)
 	iio_device_unregister(indio_dev);
 	regulator_disable(info->vref);
 	clk_disable_unprepare(info->clk);
-
-	return 0;
 }
 
 static int __maybe_unused th1520_adc_suspend(struct device *dev)
