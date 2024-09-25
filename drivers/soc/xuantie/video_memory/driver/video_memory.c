@@ -78,6 +78,7 @@
 #include <linux/errno.h>
 #include <linux/dma-mapping.h>
 #include <linux/dma-buf.h>
+#include <linux/vmalloc.h>
 #include <linux/version.h>
 #include <linux/platform_device.h>
 #include <linux/of.h>
