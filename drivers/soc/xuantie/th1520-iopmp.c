@@ -654,10 +654,9 @@ static int th1520_iopmp_probe(struct platform_device *pdev)
 	return 0;
 }
 
-static int th1520_iopmp_remove(struct platform_device *pdev)
+static void th1520_iopmp_remove(struct platform_device *pdev)
 {
 	platform_set_drvdata(pdev, NULL);
-	return 0;
 }
 
 static int __maybe_unused th1520_iopmp_noirq_suspend(struct device *dev)
