@@ -4789,7 +4789,7 @@ int __init hantroenc_vcmd_probe(struct platform_device *pdev)
 
 }
 
-static int hantroenc_vcmd_remove(struct platform_device *pdev)
+static void hantroenc_vcmd_remove(struct platform_device *pdev)
 {
   int i=0;
   u32 result;
@@ -4859,7 +4859,6 @@ static int hantroenc_vcmd_remove(struct platform_device *pdev)
 #endif
 
   pr_info("vc8000_vcmd_driver: module removed\n");
-  return 0;
 }
 
 

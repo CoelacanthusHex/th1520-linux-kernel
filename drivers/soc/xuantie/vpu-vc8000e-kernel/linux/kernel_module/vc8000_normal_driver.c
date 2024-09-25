@@ -1168,7 +1168,7 @@ static int encoder_hantrodec_probe(struct platform_device *pdev)
     return result;
 }
 
-static int encoder_hantrodec_remove(struct platform_device *pdev)
+static void encoder_hantrodec_remove(struct platform_device *pdev)
 {
   int i=0, j = 0;
 #ifdef HANTROMMU_SUPPORT
@@ -1211,7 +1211,6 @@ static int encoder_hantrodec_remove(struct platform_device *pdev)
   unregister_chrdev(hantroenc_major, "vc8000");
 
   printk(KERN_INFO "hantroenc: module removed\n");
-  return 0;
 }
 
 

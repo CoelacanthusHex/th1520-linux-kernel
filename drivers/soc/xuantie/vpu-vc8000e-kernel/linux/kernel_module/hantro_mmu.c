@@ -275,11 +275,10 @@ static int hantro_drm_probe(struct platform_device *pdev)
   (void) result;
   return 0;
 }
-static int hantro_drm_remove(struct platform_device *pdev)
+static void hantro_drm_remove(struct platform_device *pdev)
 {
   struct device *dev = &pdev->dev;
   (void) dev;
-  return 0;
 }
 static const struct platform_device_id hantro_drm_platform_ids[] = {
   {
