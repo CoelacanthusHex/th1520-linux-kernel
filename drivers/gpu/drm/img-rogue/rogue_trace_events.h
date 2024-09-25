@@ -89,9 +89,9 @@ TRACE_EVENT_FN(rogue_fence_update,
 	),
 
 	TP_fast_assign(
-		__assign_str(comm, comm);
-		__assign_str(cmd, cmd);
-		__assign_str(dm, dm);
+		__assign_str(comm);
+		__assign_str(cmd);
+		__assign_str(dm);
 		__entry->ctx_id = ctx_id;
 		__entry->offset = offset;
 		__entry->sync_fwaddr = sync_fwaddr;
@@ -136,9 +136,9 @@ TRACE_EVENT_FN(rogue_fence_check,
 	),
 
 	TP_fast_assign(
-		__assign_str(comm, comm);
-		__assign_str(cmd, cmd);
-		__assign_str(dm, dm);
+		__assign_str(comm);
+		__assign_str(cmd);
+		__assign_str(dm);
 		__entry->ctx_id = ctx_id;
 		__entry->offset = offset;
 		__entry->sync_fwaddr = sync_fwaddr;
@@ -176,7 +176,7 @@ TRACE_EVENT(rogue_job_enqueue,
 		__entry->ctx_id = ctx_id;
 		__entry->int_id = int_id;
 		__entry->ext_id = ext_id;
-		__assign_str(kick_type, kick_type);
+		__assign_str(kick_type);
 	),
 
 	TP_printk("ctx_id=%lu int_id=%lu ext_id=%lu kick_type=%s",
@@ -205,7 +205,7 @@ TRACE_EVENT(rogue_sched_switch,
 	),
 
 	TP_fast_assign(
-		__assign_str(work_type, work_type);
+		__assign_str(work_type);
 		__entry->switch_type = switch_type;
 		__entry->timestamp = timestamp;
 		__entry->next_ctx_id = next_ctx_id;
@@ -243,8 +243,8 @@ TRACE_EVENT(rogue_create_fw_context,
 	),
 
 	TP_fast_assign(
-		__assign_str(comm, comm);
-		__assign_str(dm, dm);
+		__assign_str(comm);
+		__assign_str(dm);
 		__entry->ctx_id = ctx_id;
 	),
 
@@ -510,7 +510,7 @@ TRACE_EVENT_FN(rogue_firmware_activity,
 
 	TP_fast_assign(
 		__entry->timestamp = timestamp;
-		__assign_str(task, task);
+		__assign_str(task);
 		__entry->fw_event = fw_event;
 	),
 
