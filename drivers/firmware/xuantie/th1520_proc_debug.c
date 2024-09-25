@@ -61,7 +61,7 @@ static int log_proc_show(struct seq_file *file, void *v)
 	char *buf;
 	size_t i;
 	/*dcache clean and invalid*/
-	ALT_CMO_OP(flush, (phys_to_virt(log_ctrl->log_phy)),
+	ALT_CMO_OP(FLUSH, (phys_to_virt(log_ctrl->log_phy)),
 		   sizeof(struct th1520_hw_log),
 		   riscv_cbom_block_size);
 
@@ -112,7 +112,7 @@ static int log_proc_show(struct seq_file *file, void *v)
 		__raw_writel(write, &log_ctrl->log->rb.read);
 		kfree(buf);
 		/*dcahce clean*/
-		ALT_CMO_OP(clean, (phys_to_virt(log_ctrl->log_phy)),
+		ALT_CMO_OP(CLEAN, (phys_to_virt(log_ctrl->log_phy)),
 			   sizeof(struct th1520_hw_log), riscv_cbom_block_size);
 		//seq_printf(file,"\n%d %d %d %d %d\n",log_patch_1, log_patch_2, log_size ,last_fame_size, read);
 		seq_printf(
