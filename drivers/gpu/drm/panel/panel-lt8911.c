@@ -1,6 +1,7 @@
 #include "panel-lt8911.h"
 #include <linux/version.h>
 #include <linux/of_gpio.h>
+#include <linux/backlight.h>
 #include <linux/regulator/consumer.h>
 
 #define ILI9881_PAGE(_page)	DSI_DCS_WRITE(dsi, 0xff, 0x98, 0x81, _page)
