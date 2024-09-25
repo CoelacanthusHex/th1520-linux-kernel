@@ -69,9 +69,9 @@ static int th1520_hdmi_pcm_probe(struct platform_device *pdev)
 					ARRAY_SIZE(th1520_hdmi_pcm_dai));
 }
 
-static int th1520_hdmi_pcm_remove(struct platform_device *pdev)
+static void th1520_hdmi_pcm_remove(struct platform_device *pdev)
 {
-	return 0;
+	return;
 }
 
 static const struct platform_device_id th1520_hdmi_pcm_driver_ids[] = {

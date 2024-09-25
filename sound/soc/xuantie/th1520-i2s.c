@@ -798,7 +798,7 @@ err_pm_disable:
 	return ret;
 }
 
-static int th1520_i2s_remove(struct platform_device *pdev)
+static void th1520_i2s_remove(struct platform_device *pdev)
 {
         struct th1520_i2s_priv *i2s_priv = dev_get_drvdata(&pdev->dev);
 
@@ -807,8 +807,6 @@ static int th1520_i2s_remove(struct platform_device *pdev)
                 th1520_i2s_runtime_suspend(&pdev->dev);
 
         clk_disable_unprepare(i2s_priv->clk);
-
-        return 0;
 }
 
 static const struct dev_pm_ops th1520_i2s_pm_ops = {
