@@ -938,7 +938,7 @@ GFP_Alloc(
         {
             int order = get_order(bytes);
 
-            if (order >= MAX_ORDER)
+            if (order >= MAX_PAGE_ORDER)
             {
                 status = ENOMEM;
                 goto OnError;
