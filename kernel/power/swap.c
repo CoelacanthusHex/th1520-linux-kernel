@@ -333,7 +333,7 @@ static int mark_swapfiles(struct swap_map_handle *handle, unsigned int flags)
 				      swsusp_resume_block, swsusp_header, NULL);
 		if(!error)
 		{
-			error = blkdev_issue_flush(hib_resume_bdev);
+			error = blkdev_issue_flush(file_bdev(hib_resume_bdev_file));
 			pr_info("issue flush ert %d\n",error);
 		}
 	} else {
