@@ -178,7 +178,7 @@ out_clk:
 	return ret;
 }
 
-static int dw_qspi_mmio_remove(struct platform_device *pdev)
+static void dw_qspi_mmio_remove(struct platform_device *pdev)
 {
 	struct dw_qspi_mmio *dwsmmio = platform_get_drvdata(pdev);
 
@@ -186,8 +186,6 @@ static int dw_qspi_mmio_remove(struct platform_device *pdev)
 	clk_disable_unprepare(dwsmmio->pclk);
 	clk_disable_unprepare(dwsmmio->sclk);
 	clk_disable_unprepare(dwsmmio->clk);
-
-	return 0;
 }
 
 static const struct of_device_id dw_qspi_mmio_of_match[] = {
