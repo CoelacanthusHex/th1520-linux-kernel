@@ -205,7 +205,7 @@ err:
 	return ret;
 }
 
-static int dwc3_xuantie_remove(struct platform_device *pdev)
+static void dwc3_xuantie_remove(struct platform_device *pdev)
 {
 	struct dwc3_xuantie	*xuantie = platform_get_drvdata(pdev);
 
@@ -218,8 +218,6 @@ static int dwc3_xuantie_remove(struct platform_device *pdev)
 
 	pm_runtime_disable(xuantie->dev);
 	pm_runtime_set_suspended(xuantie->dev);
-
-	return 0;
 }
 
 #ifdef CONFIG_PM_SLEEP
