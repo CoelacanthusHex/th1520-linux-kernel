@@ -91,7 +91,7 @@ reg_failed:
 	return ret;
 }
 
-static int th1520_hwspinlock_remove(struct platform_device *pdev)
+static void th1520_hwspinlock_remove(struct platform_device *pdev)
 {
 	struct th1520_hwspinlock *hwspin = platform_get_drvdata(pdev);
 	int ret;
@@ -99,14 +99,12 @@ static int th1520_hwspinlock_remove(struct platform_device *pdev)
 	ret = hwspin_lock_unregister(&hwspin->bank);
 	if (ret) {
 		dev_err(&pdev->dev, "%s failed: %d\n", __func__, ret);
-		return ret;
+		return;
 	}
 
 	pm_runtime_disable(&pdev->dev);
 
 	iounmap(hwspin->io_base);
-
-	return 0;
 }
 
 static const struct of_device_id th1520_hwpinlock_ids[] = {
