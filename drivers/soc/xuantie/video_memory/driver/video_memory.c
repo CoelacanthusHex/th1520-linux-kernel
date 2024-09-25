@@ -1640,7 +1640,7 @@ err1:
     return result;
 }
 
-static int vidalloc_remove(struct platform_device *pdev)
+static void vidalloc_remove(struct platform_device *pdev)
 {
     DEBUG_PRINT("enter %s\n",__func__);
     rsvmem_pool_destroy();
@@ -1648,8 +1648,6 @@ static int vidalloc_remove(struct platform_device *pdev)
 	device_destroy(vidalloc_class, vidalloc_devt);
     unregister_chrdev_region(vidalloc_devt, 1);
     class_destroy(vidalloc_class);
-
-    return 0;
 }
 
 static const struct of_device_id thead_of_match[] = {

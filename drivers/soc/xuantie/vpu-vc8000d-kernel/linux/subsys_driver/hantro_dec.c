@@ -3181,7 +3181,7 @@ err:
 }
 
 
-static int decoder_hantrodec_remove(struct platform_device *pdev)
+static void decoder_hantrodec_remove(struct platform_device *pdev)
 {
   if (root_debugfs_dir) {
     debugfs_remove_recursive(root_debugfs_dir);
@@ -3256,7 +3256,6 @@ static int decoder_hantrodec_remove(struct platform_device *pdev)
   sysfs_remove_group(&pdev->dev.kobj,&vdec_dev_attr_group);
 
   pr_info("hantrodec: module removed\n");
-  return 0;
 }
 
 
