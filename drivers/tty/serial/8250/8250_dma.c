@@ -265,7 +265,7 @@ dev_dbg_once(p->port.dev,
 
 		/* TX buffer */
 		dma->tx_addr = dma_map_single(dma->txchan->device->dev,
-						p->port.state->xmit.buf,
+						p->port.state->port.xmit_fifo.buf,
 						UART_XMIT_SIZE,
 						DMA_TO_DEVICE);
 		if (dma_mapping_error(dma->txchan->device->dev, dma->tx_addr)) {
