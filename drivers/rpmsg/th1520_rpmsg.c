@@ -982,7 +982,7 @@ static int mbox_client_th1520_probe(struct platform_device *pdev)
 	return 0;
 }
 
-static int mbox_client_th1520_remove(struct platform_device *pdev)
+static void mbox_client_th1520_remove(struct platform_device *pdev)
 {
 	struct mbox_client_th1520_device *tdev = platform_get_drvdata(pdev);
 
@@ -993,8 +993,6 @@ static int mbox_client_th1520_remove(struct platform_device *pdev)
 
 	if (tdev->rx_channel && tdev->rx_channel != tdev->tx_channel)
 		mbox_free_channel(tdev->rx_channel);
-
-	return 0;
 }
 
 static const struct of_device_id mbox_client_th1520_match[] = {
