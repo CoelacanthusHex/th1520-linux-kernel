@@ -15,6 +15,7 @@
 #include <linux/virtio_ids.h>
 #include <linux/virtio_config.h>
 #include <linux/virtio_vdmabuf.h>
+#include <linux/vmalloc.h>
 #include <linux/slab.h>
 #include <linux/of_address.h>
 #include <linux/of_fdt.h>
