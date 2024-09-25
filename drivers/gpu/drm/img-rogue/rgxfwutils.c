@@ -1344,7 +1344,7 @@ static PVRSRV_ERROR RGXSetupCCB(PVRSRV_RGXDEV_INFO	*psDevInfo,
 
 	if (unlikely(iStrLen < 0))
 	{
-		OSStringLCopy(szCCBCtlName, "FwCCBControl", DEVMEM_ANNOTATION_MAX_LEN);
+		OSStringSCopy(szCCBCtlName, "FwCCBControl", DEVMEM_ANNOTATION_MAX_LEN);
 	}
 
 	/* Allocate memory for the CCB control.*/

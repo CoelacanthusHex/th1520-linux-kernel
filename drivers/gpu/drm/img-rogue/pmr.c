@@ -687,7 +687,7 @@ PMRCreatePMR(PHYS_HEAP *psPhysHeap,
 	psPMR->eFlavour = eType;
 	OSAtomicWrite(&psPMR->iRefCount, 1);
 
-	OSStringLCopy(psPMR->szAnnotation, pszAnnotation, DEVMEM_ANNOTATION_MAX_LEN);
+	OSStringSCopy(psPMR->szAnnotation, pszAnnotation, DEVMEM_ANNOTATION_MAX_LEN);
 
 #if defined(PDUMP)
 	/* if allocation was done on the host node don't include it in the PDUMP */

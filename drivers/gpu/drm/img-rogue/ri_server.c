@@ -1238,7 +1238,7 @@ IMG_BOOL RIGetListEntryKM(IMG_PID pid,
 
 			if (szProcName[0] == '\0')
 			{
-				OSStringLCopy(szProcName, (pid == PVR_SYS_ALLOC_PID) ?
+				OSStringSCopy(szProcName, (pid == PVR_SYS_ALLOC_PID) ?
 						PVRSRV_MODNAME : psRISubEntry->ai8ProcName, RI_PROC_BUF_SIZE);
 			}
 
@@ -1300,7 +1300,7 @@ IMG_BOOL RIGetListEntryKM(IMG_PID pid,
 
 			if (szProcName[0] == '\0')
 			{
-				OSStringLCopy(szProcName, PVRSRV_MODNAME, RI_PROC_BUF_SIZE);
+				OSStringSCopy(szProcName, PVRSRV_MODNAME, RI_PROC_BUF_SIZE);
 			}
 			if (psSysAllocNode != NULL && psSysAllocNode != &g_sSysAllocPidListHead)
 			{
@@ -1366,7 +1366,7 @@ IMG_BOOL RIGetListEntryKM(IMG_PID pid,
 					/* Remember the name of the process for 1 PMR for the summary */
 					if (szProcName[0] == '\0')
 					{
-						OSStringLCopy(szProcName, psRIEntry->ai8ProcName, RI_PROC_BUF_SIZE);
+						OSStringSCopy(szProcName, psRIEntry->ai8ProcName, RI_PROC_BUF_SIZE);
 					}
 					bPMRToDisplay = IMG_TRUE;
 				}

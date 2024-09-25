@@ -2373,7 +2373,7 @@ static void _FillAppForFWFaults(PVRSRV_RGXDEV_INFO *psDevInfo,
 								psProcInfo);
 			if (!bFound)
 			{
-				OSStringLCopy(psProcInfo->szProcessName,
+				OSStringSCopy(psProcInfo->szProcessName,
 								"(unknown)",
 								sizeof(psProcInfo->szProcessName));
 			}
@@ -2485,7 +2485,7 @@ static void _RecordFaultInfo(PVRSRV_RGXDEV_INFO *psDevInfo,
 			bIsPMFault = IMG_TRUE;
 			bFound = IMG_TRUE;
 			sProcessInfo.uiPID = RGXMEM_SERVER_PID_PM;
-			OSStringLCopy(sProcessInfo.szProcessName, "PM", sizeof(sProcessInfo.szProcessName));
+			OSStringSCopy(sProcessInfo.szProcessName, "PM", sizeof(sProcessInfo.szProcessName));
 			sProcessInfo.szProcessName[sizeof(sProcessInfo.szProcessName) - 1] = '\0';
 			sProcessInfo.bUnregistered = IMG_FALSE;
 		}
@@ -3265,7 +3265,7 @@ static void _GetFwSysFlagsDescription(IMG_CHAR *psDesc, IMG_UINT32 ui32DescSize,
 	size_t uLabelLen = sizeof(szCswLabel) - 1;
 	const size_t uiBytesPerDesc = (ui32DescSize - uLabelLen) / 2U - 1U;
 
-	OSStringLCopy(psDesc, szCswLabel, ui32DescSize);
+	OSStringSCopy(psDesc, szCswLabel, ui32DescSize);
 
 	_Flags2Description(psDesc, uiBytesPerDesc + uLabelLen, asCswOpts2Description, ARRAY_SIZE(asCswOpts2Description), ui32RawFlags);
 	_Flags2Description(psDesc, ui32DescSize, asMisc2Description, ARRAY_SIZE(asMisc2Description), ui32RawFlags);
@@ -3277,7 +3277,7 @@ static void _GetFwOsFlagsDescription(IMG_CHAR *psDesc, IMG_UINT32 ui32DescSize, 
 	size_t uLabelLen = sizeof(szCswLabel) - 1;
 	const size_t uiBytesPerDesc = (ui32DescSize - uLabelLen) / 2U - 1U;
 
-	OSStringLCopy(psDesc, szCswLabel, ui32DescSize);
+	OSStringSCopy(psDesc, szCswLabel, ui32DescSize);
 
 	_Flags2Description(psDesc, uiBytesPerDesc + uLabelLen, asFwOsCfg2Description, ARRAY_SIZE(asFwOsCfg2Description), ui32RawFlags);
 }
@@ -3477,7 +3477,7 @@ static void _RGXDumpFWHWRInfo(DUMPDEBUG_PRINTF_FUNC *pfnDumpDebugPrintf,
 		return;
 	}
 
-	OSStringLCopy(pszLine, szMsgHeader, ui32LineSize);
+	OSStringSCopy(pszLine, szMsgHeader, ui32LineSize);
 	pszTemp = pszLine + ui32MsgHeaderCharCount;
 
 	for (dm = 0; dm < psDevInfo->sDevFeatureCfg.ui32MAXDMCount; dm++)
@@ -3524,7 +3524,7 @@ static void _RGXDumpFWHWRInfo(DUMPDEBUG_PRINTF_FUNC *pfnDumpDebugPrintf,
 
 				if (ui32HWRRecoveryFlags == RGXFWIF_DM_STATE_WORKING)
 				{
-					OSStringLCopy(sPerDmHwrDescription, " working;", RGX_DEBUG_STR_SIZE);
+					OSStringSCopy(sPerDmHwrDescription, " working;", RGX_DEBUG_STR_SIZE);
 				}
 				else
 				{
@@ -4481,7 +4481,7 @@ static void RGXPrepareExtraDebugInfo(IMG_CHAR *pszBuffer, IMG_UINT32 ui32BufferS
 	IMG_BOOL   bHasExtraDebugInfo = IMG_FALSE;
 
 	/* Add prepend string */
-	OSStringLCopy(pszBuffer, RGXFWT_DEBUG_INFO_STR_PREPEND, ui32BufferSize);
+	OSStringSCopy(pszBuffer, RGXFWT_DEBUG_INFO_STR_PREPEND, ui32BufferSize);
 
 	/* Add debug info strings */
 	for (i = 0; i < ui32NumFields; i++)

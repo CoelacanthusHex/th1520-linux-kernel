@@ -303,7 +303,7 @@ _prepareStatsHeaderString(IMG_CHAR *pszStatsSpecificStr, const IMG_CHAR* pszGene
 	IMG_CHAR szStatsHeaderFooterStr[75];
 
 	/* Prepare text content of the header in a local string */
-	OSStringLCopy(szStatsHeaderFooterStr, pszStatsSpecificStr, ARRAY_SIZE(szStatsHeaderFooterStr));
+	OSStringSCopy(szStatsHeaderFooterStr, pszStatsSpecificStr, ARRAY_SIZE(szStatsHeaderFooterStr));
 	OSStringLCat(szStatsHeaderFooterStr, pszGenericHeaderStr, ARRAY_SIZE(szStatsHeaderFooterStr));
 
 	/* Write all '-' characters to the header string */

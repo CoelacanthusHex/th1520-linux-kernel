@@ -675,7 +675,7 @@ static void InitialiseAllocation(RECORD_ALLOCATION *psAlloc,
 							IMG_DEVMEM_SIZE_T uiSize,
 							IMG_UINT32 ui32Log2PageSize)
 {
-	OSStringLCopy(psAlloc->szName, pszName, sizeof(psAlloc->szName));
+	OSStringSCopy(psAlloc->szName, pszName, sizeof(psAlloc->szName));
 	psAlloc->ui64Serial = ui64Serial;
 	psAlloc->uiPID = uiPID;
 	psAlloc->sDevVAddr = sDevVAddr;
@@ -1687,7 +1687,7 @@ found_pid:
 			{
 				DEVICEMEM_HISTORY_QUERY_OUT_RESULT *psResult = &psQueryOut->sResults[psQueryOut->ui32NumResults];
 
-				OSStringLCopy(psResult->szString, psAlloc->szName, sizeof(psResult->szString));
+				OSStringSCopy(psResult->szString, psAlloc->szName, sizeof(psResult->szString));
 				psResult->sBaseDevVAddr = psAlloc->sDevVAddr;
 				psResult->uiSize = psAlloc->uiSize;
 				psResult->bMap = bMap;

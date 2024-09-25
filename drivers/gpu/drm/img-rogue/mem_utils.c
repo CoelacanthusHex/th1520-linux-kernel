@@ -385,8 +385,6 @@ void DeviceMemSetBytes(void *pvDst, unsigned char ui8Value, size_t uSize)
 	}
 }
 
-#if !defined(__QNXNTO__) /* Ignore Neutrino as it uses strlcpy */
-
 #if defined(__KERNEL__) && defined(__linux__)
 /*
  * In case of Linux kernel-mode in a debug build, choose the variant
@@ -395,17 +393,17 @@ void DeviceMemSetBytes(void *pvDst, unsigned char ui8Value, size_t uSize)
  */
 #if defined(DEBUG)
 IMG_INTERNAL
-size_t StringLCopy(IMG_CHAR *pszDest, const IMG_CHAR *pszSrc, size_t uDataSize)
+size_t StringSCopy(IMG_CHAR *pszDest, const IMG_CHAR *pszSrc, size_t uDataSize)
 {
 	/*
 	 * Let strlcpy handle any truncation cases correctly.
 	 * We will definitely get a NUL-terminated string set in pszDest
 	 */
-	size_t  uSrcSize = strlcpy(pszDest, pszSrc, uDataSize);
+	size_t  uSrcSize = strscpy(pszDest, pszSrc, uDataSize);
 
 #if defined(PVR_DEBUG_STRLCPY)
 	/* Handle truncation by dumping calling stack if debug allows */
-	if (uSrcSize >= uDataSize)
+	if (uSrcSize == -E2BIG)
 	{
 		PVR_DPF((PVR_DBG_WARNING,
 			"%s: String truncated Src = '<%s>' %ld bytes, Dest = '%s'",
@@ -418,32 +416,4 @@ size_t StringLCopy(IMG_CHAR *pszDest, const IMG_CHAR *pszSrc, size_t uDataSize)
 }
 #endif /* defined(DEBUG) */
 
-#else /* defined(__KERNEL__) && defined(__linux__) */
-/*
- * For every other platform, make use of the strnlen and strncpy
- * implementation of StringLCopy.
- * NOTE: It is crucial to avoid memcpy as this has a hidden side-effect of
- * dragging in whatever the build-environment flavour of GLIBC is which can
- * cause unexpected failures for host-side command execution.
- */
-IMG_INTERNAL
-size_t StringLCopy(IMG_CHAR *pszDest, const IMG_CHAR *pszSrc, size_t uDataSize)
-{
-	size_t uSrcSize = strnlen(pszSrc, uDataSize);
-
-	(void)strncpy(pszDest, pszSrc, uSrcSize);
-	if (uSrcSize == uDataSize)
-	{
-		pszDest[uSrcSize-1] = '\0';
-	}
-	else
-	{
-		pszDest[uSrcSize] = '\0';
-	}
-
-	return uSrcSize;
-}
-
-#endif /* defined(__KERNEL__) && defined(__linux__) */
-
-#endif /* !defined(__QNXNTO__) */
+#endif

@@ -1033,7 +1033,7 @@ DevmemCreateHeap(DEVMEM_CONTEXT *psCtx,
 	ui32pszStrSize = OSStringLength(pszName) + 1;
 	pszStr = OSAllocMem(ui32pszStrSize);
 	PVR_GOTO_IF_NOMEM(pszStr, eError, e1);
-	OSStringLCopy(pszStr, pszName, ui32pszStrSize);
+	OSStringSCopy(pszStr, pszName, ui32pszStrSize);
 	psHeap->pszName = pszStr;
 
 	psHeap->uiSize = uiLength;
@@ -1048,7 +1048,7 @@ DevmemCreateHeap(DEVMEM_CONTEXT *psCtx,
 	ui32pszStrSize = OSStringLength(aszBuf) + 1;
 	pszStr = OSAllocMem(ui32pszStrSize);
 	PVR_GOTO_IF_NOMEM(pszStr, eError, e2);
-	OSStringLCopy(pszStr, aszBuf, ui32pszStrSize);
+	OSStringSCopy(pszStr, aszBuf, ui32pszStrSize);
 	psHeap->pszSubAllocRAName = pszStr;
 
 #if defined(__KERNEL__)
@@ -1141,7 +1141,7 @@ DevmemCreateHeap(DEVMEM_CONTEXT *psCtx,
 		eError = PVRSRV_ERROR_OUT_OF_MEMORY;
 		goto e4;
 	}
-	OSStringLCopy(pszStr, aszBuf, ui32pszStrSize);
+	OSStringSCopy(pszStr, aszBuf, ui32pszStrSize);
 	psHeap->pszQuantizedVMRAName = pszStr;
 
 	psHeap->psQuantizedVMRA = RA_Create(psHeap->pszQuantizedVMRAName,
@@ -1589,7 +1589,7 @@ DevmemSubAllocate(IMG_UINT8 uiPreAllocMultiplier,
 	 * the allocation gets mapped/unmapped
 	 */
 	CheckAnnotationLength(pszText);
-	OSStringLCopy(psMemDesc->szText, pszText, DEVMEM_ANNOTATION_MAX_LEN);
+	OSStringSCopy(psMemDesc->szText, pszText, DEVMEM_ANNOTATION_MAX_LEN);
 
 #if defined(PVRSRV_ENABLE_GPU_MEMORY_INFO)
 	if (PVRSRVIsBridgeEnabled(GetBridgeHandle(psMemDesc->psImport->hDevConnection), PVRSRV_BRIDGE_RI))
@@ -1698,7 +1698,7 @@ DevmemAllocateExportable(SHARED_DEV_CONNECTION hDevConnection,
 	 * the allocation gets mapped/unmapped
 	 */
 	CheckAnnotationLength(pszText);
-	OSStringLCopy(psMemDesc->szText, pszText, DEVMEM_ANNOTATION_MAX_LEN);
+	OSStringSCopy(psMemDesc->szText, pszText, DEVMEM_ANNOTATION_MAX_LEN);
 
 #if defined(PVRSRV_ENABLE_GPU_MEMORY_INFO)
 	if (PVRSRVIsBridgeEnabled(GetBridgeHandle(psImport->hDevConnection), PVRSRV_BRIDGE_RI))
@@ -1800,7 +1800,7 @@ DevmemAllocateSparse(SHARED_DEV_CONNECTION hDevConnection,
 	 * the allocation gets mapped/unmapped
 	 */
 	CheckAnnotationLength(pszText);
-	OSStringLCopy(psMemDesc->szText, pszText, DEVMEM_ANNOTATION_MAX_LEN);
+	OSStringSCopy(psMemDesc->szText, pszText, DEVMEM_ANNOTATION_MAX_LEN);
 
 #if defined(PVRSRV_ENABLE_GPU_MEMORY_INFO)
 	if (PVRSRVIsBridgeEnabled(GetBridgeHandle(psImport->hDevConnection), PVRSRV_BRIDGE_RI))
@@ -2843,7 +2843,7 @@ DevmemLocalImport(SHARED_DEV_CONNECTION hDevConnection,
 	 * to DevicememHistory when the allocation gets mapped/unmapped
 	 */
 	CheckAnnotationLength(pszAnnotation);
-	OSStringLCopy(psMemDesc->szText, pszAnnotation, DEVMEM_ANNOTATION_MAX_LEN);
+	OSStringSCopy(psMemDesc->szText, pszAnnotation, DEVMEM_ANNOTATION_MAX_LEN);
 
 	return PVRSRV_OK;
 

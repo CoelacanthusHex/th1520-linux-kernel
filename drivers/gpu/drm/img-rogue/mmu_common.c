@@ -2494,7 +2494,7 @@ MMU_ContextCreate(CONNECTION_DATA *psConnection,
 	psPhysMemCtx->pszPhysMemRAName = OSAllocMem(psPhysMemCtx->uiPhysMemRANameAllocSize);
 	PVR_LOG_GOTO_IF_NOMEM(psPhysMemCtx->pszPhysMemRAName, eError, e2);
 
-	OSStringLCopy(psPhysMemCtx->pszPhysMemRAName, sBuf, psPhysMemCtx->uiPhysMemRANameAllocSize);
+	OSStringSCopy(psPhysMemCtx->pszPhysMemRAName, sBuf, psPhysMemCtx->uiPhysMemRANameAllocSize);
 
 	psPhysMemCtx->psPhysMemRA = RA_Create(psPhysMemCtx->pszPhysMemRAName,
 	                                      /* subsequent import */

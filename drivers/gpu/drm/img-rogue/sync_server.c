@@ -571,7 +571,7 @@ PVRSRVSyncRecordAddKM(CONNECTION_DATA *psConnection,
 		if (ui32ClassNameSize >= PVRSRV_SYNC_NAME_LENGTH)
 			ui32ClassNameSize = PVRSRV_SYNC_NAME_LENGTH;
 		/* Copy over the class name annotation */
-		OSStringLCopy(psSyncRec->szClassName, pszClassName, ui32ClassNameSize);
+		OSStringSCopy(psSyncRec->szClassName, pszClassName, ui32ClassNameSize);
 	}
 	else
 	{

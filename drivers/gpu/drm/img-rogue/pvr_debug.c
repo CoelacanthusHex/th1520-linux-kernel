@@ -99,7 +99,7 @@ AddToBufferCCB(const IMG_CHAR *pszFileName, IMG_UINT32 ui32Line,
 
 	do_gettimeofday(&gsDebugCCB[giOffset].sTimeVal);
 
-	OSStringLCopy(gsDebugCCB[giOffset].pcMesg, szBuffer,
+	OSStringSCopy(gsDebugCCB[giOffset].pcMesg, szBuffer,
 	              PVRSRV_DEBUG_CCB_MESG_MAX);
 
 	giOffset = (giOffset + 1) % PVRSRV_DEBUG_CCB_MAX;
@@ -372,34 +372,34 @@ void PVRSRVDebugPrintf(IMG_UINT32 ui32DebugLevel,
 	{
 		case DBGPRIV_FATAL:
 		{
-			OSStringLCopy(pszBuf, "PVR_K:(Fatal): ", ui32BufSiz);
+			OSStringSCopy(pszBuf, "PVR_K:(Fatal): ", ui32BufSiz);
 			PVRSRV_REPORT_ERROR();
 			break;
 		}
 		case DBGPRIV_ERROR:
 		{
-			OSStringLCopy(pszBuf, "PVR_K:(Error): ", ui32BufSiz);
+			OSStringSCopy(pszBuf, "PVR_K:(Error): ", ui32BufSiz);
 			PVRSRV_REPORT_ERROR();
 			break;
 		}
 		case DBGPRIV_WARNING:
 		{
-			OSStringLCopy(pszBuf, "PVR_K:(Warn):  ", ui32BufSiz);
+			OSStringSCopy(pszBuf, "PVR_K:(Warn):  ", ui32BufSiz);
 			break;
 		}
 		case DBGPRIV_MESSAGE:
 		{
-			OSStringLCopy(pszBuf, "PVR_K:(Mesg):  ", ui32BufSiz);
+			OSStringSCopy(pszBuf, "PVR_K:(Mesg):  ", ui32BufSiz);
 			break;
 		}
 		case DBGPRIV_VERBOSE:
 		{
-			OSStringLCopy(pszBuf, "PVR_K:(Verb):  ", ui32BufSiz);
+			OSStringSCopy(pszBuf, "PVR_K:(Verb):  ", ui32BufSiz);
 			break;
 		}
 		case DBGPRIV_DEBUG:
 		{
-			OSStringLCopy(pszBuf, "PVR_K:(Debug): ", ui32BufSiz);
+			OSStringSCopy(pszBuf, "PVR_K:(Debug): ", ui32BufSiz);
 			break;
 		}
 		case DBGPRIV_CALLTRACE:
@@ -407,7 +407,7 @@ void PVRSRVDebugPrintf(IMG_UINT32 ui32DebugLevel,
 		case DBGPRIV_BUFFERED:
 		default:
 		{
-			OSStringLCopy(pszBuf, "PVR_K: ", ui32BufSiz);
+			OSStringSCopy(pszBuf, "PVR_K: ", ui32BufSiz);
 			break;
 		}
 	}

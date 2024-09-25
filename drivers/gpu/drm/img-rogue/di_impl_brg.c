@@ -723,7 +723,7 @@ static void _DeInit(void)
  * to indicate an error (the path is too long to fit into the buffer). */
 static IMG_INT _BuildGroupPath(IMG_CHAR *pszPath, const DIIB_GROUP *psGroup)
 {
-	IMG_INT iOff;
+	IMG_INT iOff, ret;
 
 	if (psGroup == NULL)
 	{
@@ -735,13 +735,15 @@ static IMG_INT _BuildGroupPath(IMG_CHAR *pszPath, const DIIB_GROUP *psGroup)
 	iOff = _BuildGroupPath(pszPath, psGroup->psParentGroup);
 	PVR_RETURN_IF_FALSE(iOff != -1, -1);
 
-	iOff += OSStringLCopy(pszPath + iOff, "/",
+	ret = OSStringSCopy(pszPath + iOff, "/",
 	                      DI_IMPL_BRG_PATH_LEN - iOff);
-	PVR_RETURN_IF_FALSE(iOff < DI_IMPL_BRG_PATH_LEN, -1);
+	PVR_RETURN_IF_FALSE(ret != -E2BIG, -1);
+	iOff += ret;
 
-	iOff += OSStringLCopy(pszPath + iOff, psGroup->pszName,
+	ret = OSStringSCopy(pszPath + iOff, psGroup->pszName,
 	                      DI_IMPL_BRG_PATH_LEN - iOff);
-	PVR_RETURN_IF_FALSE(iOff < DI_IMPL_BRG_PATH_LEN, -1);
+	PVR_RETURN_IF_FALSE(ret != -E2BIG, -1);
+	iOff += ret;
 
 	return iOff;
 }
@@ -749,16 +751,16 @@ static IMG_INT _BuildGroupPath(IMG_CHAR *pszPath, const DIIB_GROUP *psGroup)
 static PVRSRV_ERROR _BuildEntryPath(IMG_CHAR *pszPath, const IMG_CHAR *pszName,
                                     const DIIB_GROUP *psGroup)
 {
-	IMG_INT iOff = _BuildGroupPath(pszPath, psGroup);
+	IMG_INT iOff = _BuildGroupPath(pszPath, psGroup), ret;
 	PVR_RETURN_IF_FALSE(iOff != -1, PVRSRV_ERROR_INVALID_OFFSET);
 
-	iOff += OSStringLCopy(pszPath + iOff, "/", DI_IMPL_BRG_PATH_LEN - iOff);
-	PVR_RETURN_IF_FALSE(iOff < DI_IMPL_BRG_PATH_LEN,
-	                    PVRSRV_ERROR_INVALID_OFFSET);
+	ret = OSStringSCopy(pszPath + iOff, "/", DI_IMPL_BRG_PATH_LEN - iOff);
+	PVR_RETURN_IF_FALSE(ret != -E2BIG, PVRSRV_ERROR_INVALID_OFFSET);
+	iOff += ret;
 
-	iOff += OSStringLCopy(pszPath + iOff, pszName, DI_IMPL_BRG_PATH_LEN - iOff);
-	PVR_RETURN_IF_FALSE(iOff < DI_IMPL_BRG_PATH_LEN,
-	                    PVRSRV_ERROR_INVALID_OFFSET);
+	ret = OSStringSCopy(pszPath + iOff, pszName, DI_IMPL_BRG_PATH_LEN - iOff);
+	PVR_RETURN_IF_FALSE(ret != -E2BIG, PVRSRV_ERROR_INVALID_OFFSET);
+	iOff += ret;
 
 	return PVRSRV_OK;
 }

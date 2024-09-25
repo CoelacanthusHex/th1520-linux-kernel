@@ -1218,7 +1218,7 @@ SyncCheckpointAlloc(PSYNC_CHECKPOINT_CONTEXT psSyncContext,
 	if (pszCheckpointName)
 	{
 		/* Copy over the checkpoint name annotation */
-		OSStringLCopy(psNewSyncCheckpoint->azName, pszCheckpointName, PVRSRV_SYNC_NAME_LENGTH);
+		OSStringSCopy(psNewSyncCheckpoint->azName, pszCheckpointName, PVRSRV_SYNC_NAME_LENGTH);
 	}
 	else
 	{
@@ -1253,7 +1253,7 @@ SyncCheckpointAlloc(PSYNC_CHECKPOINT_CONTEXT psSyncContext,
 		if (pszCheckpointName)
 		{
 			/* Copy the checkpoint name annotation into a fixed-size array */
-			OSStringLCopy(szChkptName, pszCheckpointName, PVRSRV_SYNC_NAME_LENGTH);
+			OSStringSCopy(szChkptName, pszCheckpointName, PVRSRV_SYNC_NAME_LENGTH);
 		}
 		else
 		{
@@ -2204,7 +2204,7 @@ _SyncCheckpointRecordAdd(
 		if (ui32ClassNameSize >= PVRSRV_SYNC_NAME_LENGTH)
 			ui32ClassNameSize = PVRSRV_SYNC_NAME_LENGTH;
 		/* Copy over the class name annotation */
-		OSStringLCopy(psSyncRec->szClassName, pszClassName, ui32ClassNameSize);
+		OSStringSCopy(psSyncRec->szClassName, pszClassName, ui32ClassNameSize);
 	}
 	else
 	{

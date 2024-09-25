@@ -1401,7 +1401,7 @@ static void _HWPerfHostOnConnectCB(void *pvArg)
 				psHostClientInfo->uDetail.sProcName.ui32Count++;
 				psProcName->uiClientPID = psData->pid;
 				psProcName->ui32Length = ui32NameLen;
-				(void)OSStringLCopy(psProcName->acName, psData->pszProcName, ui32NameLen);
+				(void)OSStringSCopy(psProcName->acName, psData->pszProcName, ui32NameLen);
 
 				psProcName = (RGX_HWPERF_HOST_CLIENT_PROC_NAME*)IMG_OFFSET_ADDR(psProcName, ui32ProcNamePktSize);
 				ui32TotalPayloadSize += ui32ProcNamePktSize;
@@ -2255,7 +2255,7 @@ static inline void _SetupHostAllocPacketData(IMG_UINT8 *pui8Dest,
 	{
 		if (ui32NameSize)
 		{
-			OSStringLCopy(acName, psName, ui32NameSize);
+			OSStringSCopy(acName, psName, ui32NameSize);
 		}
 		else
 		{
@@ -2444,7 +2444,7 @@ static inline void _SetupHostModifyPacketData(IMG_UINT8 *pui8Dest,
 	{
 		if (ui32NameSize)
 		{
-			OSStringLCopy(acName, psName, ui32NameSize);
+			OSStringSCopy(acName, psName, ui32NameSize);
 		}
 		else
 		{
@@ -2913,7 +2913,7 @@ void RGXHWPerfHostPostClientInfoProcName(PVRSRV_RGXDEV_INFO *psRgxDevInfo,
 	psPkt->uDetail.sProcName.ui32Count = 1U;
 	psPkt->uDetail.sProcName.asProcNames[0].uiClientPID = uiPID;
 	psPkt->uDetail.sProcName.asProcNames[0].ui32Length = ui32NameLen;
-	(void)OSStringLCopy(psPkt->uDetail.sProcName.asProcNames[0].acName, psName, ui32NameLen);
+	(void)OSStringSCopy(psPkt->uDetail.sProcName.asProcNames[0].acName, psName, ui32NameLen);
 
 	_CommitHWPerfStream(psRgxDevInfo, ui32Size);
 

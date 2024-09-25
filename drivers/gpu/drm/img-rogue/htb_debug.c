@@ -958,8 +958,8 @@ DecodeHTB(HTB_Sentinel_t *pSentinel, OSDI_IMPL_ENTRY *pvDumpDebugFile,
 		{
 			if (pszFmt)
 			{
-				nPrinted = OSStringLCopy(pszBuffer, pszFmt, uBufBytesAvailable);
-				if (nPrinted >= uBufBytesAvailable)
+				nPrinted = OSStringSCopy(pszBuffer, pszFmt, uBufBytesAvailable);
+				if (nPrinted == -E2BIG)
 				{
 					PVR_DUMPDEBUG_LOG("Buffer overrun - "IMG_SIZE_FMTSPEC" printed,"
 						" max space "IMG_SIZE_FMTSPEC"\n", nPrinted,
@@ -1039,7 +1039,7 @@ DecodeHTB(HTB_Sentinel_t *pSentinel, OSDI_IMPL_ENTRY *pvDumpDebugFile,
 							break;
 
 						case TRACEBUF_ARG_TYPE_NONE:
-							nPrinted = OSStringLCopy(pszBuffer, pszFmt,
+							nPrinted = OSStringSCopy(pszBuffer, pszFmt,
 								uBufBytesAvailable);
 							break;
 
@@ -1049,7 +1049,7 @@ DecodeHTB(HTB_Sentinel_t *pSentinel, OSDI_IMPL_ENTRY *pvDumpDebugFile,
 								"recognized (fmt: %s)", aszOneArgFmt);
 							break;
 					}
-					if (nPrinted >= uBufBytesAvailable)
+					if (nPrinted == -E2BIG || nPrinted >= uBufBytesAvailable)
 					{
 						PVR_DUMPDEBUG_LOG("Buffer overrun - "IMG_SIZE_FMTSPEC" printed,"
 							" max space "IMG_SIZE_FMTSPEC"\n", nPrinted,
@@ -1063,8 +1063,8 @@ DecodeHTB(HTB_Sentinel_t *pSentinel, OSDI_IMPL_ENTRY *pvDumpDebugFile,
 				/* Display any remaining text in pszFmt string */
 				if (pszFmt)
 				{
-					nPrinted = OSStringLCopy(pszBuffer, pszFmt, uBufBytesAvailable);
-					if (nPrinted >= uBufBytesAvailable)
+					nPrinted = OSStringSCopy(pszBuffer, pszFmt, uBufBytesAvailable);
+					if (nPrinted == -E2BIG)
 					{
 						PVR_DUMPDEBUG_LOG("Buffer overrun - "IMG_SIZE_FMTSPEC" printed,"
 							" max space "IMG_SIZE_FMTSPEC"\n", nPrinted,

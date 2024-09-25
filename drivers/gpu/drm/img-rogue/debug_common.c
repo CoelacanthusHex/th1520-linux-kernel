@@ -175,7 +175,7 @@ static inline void _AppendOptionStr(IMG_CHAR pszBuildOptions[], const IMG_CHAR* 
 	}
 	if (strLen < optStrLen)
 	{
-		OSStringLCopy(pszBuildOptions+ui32BuildOptionLen, str, strLen);
+		OSStringSCopy(pszBuildOptions+ui32BuildOptionLen, str, strLen);
 		ui32BuildOptionLen += strLen - 1;
 	}
 	*pui32BuildOptionLen = ui32BuildOptionLen;

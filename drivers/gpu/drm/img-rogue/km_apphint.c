@@ -630,7 +630,7 @@ static int apphint_read(char *buffer, size_t count, APPHINT_ID ue,
 			goto err_exit;
 		}
 
-		OSStringLCopy(value->STRING, string, len);
+		OSStringSCopy(value->STRING, string, len);
 		break;
 	}
 	default:
@@ -849,10 +849,10 @@ static int apphint_kparam_set(const char *val, const struct kernel_param *kp)
 	int result;
 
 	/* need to discard const in case of string comparison */
-	result = strlcpy(val_copy, val, APPHINT_BUFFER_SIZE);
+	result = strscpy(val_copy, val, APPHINT_BUFFER_SIZE);
 
 	get_apphint_id_from_action_addr(kp->arg, &id);
-	if (result < APPHINT_BUFFER_SIZE) {
+	if (result != -E2BIG) {
 		result = apphint_read(val_copy, result, id, &value);
 		if (result >= 0) {
 			((struct apphint_action *)kp->arg)->stored = value;
@@ -1483,13 +1483,13 @@ int pvr_apphint_get_string(PVRSRV_DEVICE_NODE *device, APPHINT_ID ue, IMG_CHAR *
 	if (ue < APPHINT_ID_MAX && apphint.val[ue].stored.STRING) {
 		if ((int)ue > APPHINT_DEBUGINFO_DEVICE_ID_OFFSET) // From this point, we're in the device apphints
 		{
-			if (OSStringLCopy(pBuffer, apphint.val[ue + device_offset].stored.STRING, size) < size) {
+			if (OSStringSCopy(pBuffer, apphint.val[ue + device_offset].stored.STRING, size) != -E2BIG) {
 				error = 0;
 			}
 		}
 		else
 		{
-			if (OSStringLCopy(pBuffer, apphint.val[ue].stored.STRING, size) < size) {
+			if (OSStringSCopy(pBuffer, apphint.val[ue].stored.STRING, size) != -E2BIG) {
 				error = 0;
 			}
 		}
@@ -1577,7 +1577,7 @@ int pvr_apphint_set_string(PVRSRV_DEVICE_NODE *device, APPHINT_ID ue, IMG_CHAR *
 															 apphint.val[ue + device_offset].private_data,
 															 pBuffer);
 		} else {
-			if (strlcpy(apphint.val[ue + device_offset].stored.STRING, pBuffer, size) < size) {
+			if (strscpy(apphint.val[ue + device_offset].stored.STRING, pBuffer, size) != -E2BIG) {
 				error = 0;
 			}
 		}

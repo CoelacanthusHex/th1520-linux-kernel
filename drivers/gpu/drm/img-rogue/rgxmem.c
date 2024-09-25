@@ -423,7 +423,7 @@ static void _RecordUnregisteredMemoryContext(PVRSRV_RGXDEV_INFO *psDevInfo, SERV
 	{
 		PVR_LOG(("_RecordUnregisteredMemoryContext: Failed to get PC address for memory context"));
 	}
-	OSStringLCopy(psRecord->szProcessName, psServerMMUContext->szProcessName, sizeof(psRecord->szProcessName));
+	OSStringSCopy(psRecord->szProcessName, psServerMMUContext->szProcessName, sizeof(psRecord->szProcessName));
 }
 
 
@@ -671,7 +671,7 @@ PVRSRV_ERROR RGXRegisterMemoryContext(PVRSRV_DEVICE_NODE	*psDeviceNode,
 		psServerMMUContext->uiPID = OSGetCurrentClientProcessIDKM();
 		psServerMMUContext->psMMUContext = psMMUContext;
 		psServerMMUContext->psFWMemContextMemDesc = psFWMemContextMemDesc;
-		OSStringLCopy(psServerMMUContext->szProcessName,
+		OSStringSCopy(psServerMMUContext->szProcessName,
 		              OSGetCurrentClientProcessNameKM(),
 		              sizeof(psServerMMUContext->szProcessName));
 
@@ -796,7 +796,7 @@ IMG_BOOL RGXPCAddrToProcessInfo(PVRSRV_RGXDEV_INFO *psDevInfo, IMG_DEV_PHYADDR s
 	if (psServerMMUContext != NULL)
 	{
 		psInfo->uiPID = psServerMMUContext->uiPID;
-		OSStringLCopy(psInfo->szProcessName, psServerMMUContext->szProcessName, sizeof(psInfo->szProcessName));
+		OSStringSCopy(psInfo->szProcessName, psServerMMUContext->szProcessName, sizeof(psInfo->szProcessName));
 		psInfo->bUnregistered = IMG_FALSE;
 		bRet = IMG_TRUE;
 	}
@@ -817,7 +817,7 @@ IMG_BOOL RGXPCAddrToProcessInfo(PVRSRV_RGXDEV_INFO *psDevInfo, IMG_DEV_PHYADDR s
 			if (sPCAddress.uiAddr == sKernelPCDevPAddr.uiAddr)
 			{
 				psInfo->uiPID = RGXMEM_SERVER_PID_FIRMWARE;
-				OSStringLCopy(psInfo->szProcessName, "Firmware", sizeof(psInfo->szProcessName));
+				OSStringSCopy(psInfo->szProcessName, "Firmware", sizeof(psInfo->szProcessName));
 				psInfo->bUnregistered = IMG_FALSE;
 				bRet = IMG_TRUE;
 			}
@@ -850,7 +850,7 @@ IMG_BOOL RGXPCAddrToProcessInfo(PVRSRV_RGXDEV_INFO *psDevInfo, IMG_DEV_PHYADDR s
 			if (psRecord->sPCDevPAddr.uiAddr == sPCAddress.uiAddr)
 			{
 				psInfo->uiPID = psRecord->uiPID;
-				OSStringLCopy(psInfo->szProcessName, psRecord->szProcessName, sizeof(psInfo->szProcessName));
+				OSStringSCopy(psInfo->szProcessName, psRecord->szProcessName, sizeof(psInfo->szProcessName));
 				psInfo->bUnregistered = IMG_TRUE;
 				bRet = IMG_TRUE;
 				break;
@@ -887,7 +887,7 @@ IMG_BOOL RGXPCPIDToProcessInfo(PVRSRV_RGXDEV_INFO *psDevInfo, IMG_PID uiPID,
 	if (psServerMMUContext != NULL)
 	{
 		psInfo->uiPID = psServerMMUContext->uiPID;
-		OSStringLCopy(psInfo->szProcessName, psServerMMUContext->szProcessName, sizeof(psInfo->szProcessName));
+		OSStringSCopy(psInfo->szProcessName, psServerMMUContext->szProcessName, sizeof(psInfo->szProcessName));
 		psInfo->bUnregistered = IMG_FALSE;
 		bRet = IMG_TRUE;
 	}
@@ -895,7 +895,7 @@ IMG_BOOL RGXPCPIDToProcessInfo(PVRSRV_RGXDEV_INFO *psDevInfo, IMG_PID uiPID,
 	else if (uiPID == RGXMEM_SERVER_PID_FIRMWARE)
 	{
 		psInfo->uiPID = RGXMEM_SERVER_PID_FIRMWARE;
-		OSStringLCopy(psInfo->szProcessName, "Firmware", sizeof(psInfo->szProcessName));
+		OSStringSCopy(psInfo->szProcessName, "Firmware", sizeof(psInfo->szProcessName));
 		psInfo->bUnregistered = IMG_FALSE;
 		bRet = IMG_TRUE;
 	}
@@ -920,7 +920,7 @@ IMG_BOOL RGXPCPIDToProcessInfo(PVRSRV_RGXDEV_INFO *psDevInfo, IMG_PID uiPID,
 			if (psRecord->uiPID == uiPID)
 			{
 				psInfo->uiPID = psRecord->uiPID;
-				OSStringLCopy(psInfo->szProcessName, psRecord->szProcessName, sizeof(psInfo->szProcessName));
+				OSStringSCopy(psInfo->szProcessName, psRecord->szProcessName, sizeof(psInfo->szProcessName));
 				psInfo->bUnregistered = IMG_TRUE;
 				bRet = IMG_TRUE;
 				break;

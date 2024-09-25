@@ -166,7 +166,7 @@ PVRSRV_ERROR RGXServerFeatureFlagsToHWPerfFlags(PVRSRV_RGXDEV_INFO *psDevInfo, R
 	if ((pszBVNC = RGXDevBVNCString(psDevInfo)))
 	{
 		size_t uiStringLength = OSStringNLength(pszBVNC, RGX_HWPERF_MAX_BVNC_LEN - 1);
-		OSStringLCopy(psBVNC->aszBvncString, pszBVNC, uiStringLength + 1);
+		OSStringSCopy(psBVNC->aszBvncString, pszBVNC, uiStringLength + 1);
 		memset(&psBVNC->aszBvncString[uiStringLength], 0, RGX_HWPERF_MAX_BVNC_LEN - uiStringLength);
 	}
 	else

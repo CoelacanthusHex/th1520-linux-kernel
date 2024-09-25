@@ -361,7 +361,7 @@ static void _RGXBvncAcquireAppHint(IMG_CHAR *pszBVNC, const IMG_UINT32 ui32RGXDe
 
 		if (ui32BVNCCount == ui32RGXDevCount)
 		{
-			OSStringLCopy(pszBVNC, pszCurrentBVNC, RGX_BVNC_STR_SIZE_MAX);
+			OSStringSCopy(pszBVNC, pszCurrentBVNC, RGX_BVNC_STR_SIZE_MAX);
 			return;
 		}
 
@@ -376,7 +376,7 @@ static void _RGXBvncAcquireAppHint(IMG_CHAR *pszBVNC, const IMG_UINT32 ui32RGXDe
 	 * devices detected */
 	if (1 == ui32BVNCCount)
 	{
-		OSStringLCopy(pszBVNC, szBVNCAppHint, RGX_BVNC_STR_SIZE_MAX);
+		OSStringSCopy(pszBVNC, szBVNCAppHint, RGX_BVNC_STR_SIZE_MAX);
 	}
 }
 

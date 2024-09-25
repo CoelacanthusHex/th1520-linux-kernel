@@ -273,7 +273,7 @@ TLStreamCreate(IMG_HANDLE *phStream,
 		goto e0;
 	}
 
-	OSStringLCopy(psTmp->szName, szStreamName, PRVSRVTL_MAX_STREAM_NAME_SIZE);
+	OSStringSCopy(psTmp->szName, szStreamName, PRVSRVTL_MAX_STREAM_NAME_SIZE);
 
 	if (ui32StreamFlags & TL_FLAG_FORCE_FLUSH)
 	{

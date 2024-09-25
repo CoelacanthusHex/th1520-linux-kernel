@@ -1221,7 +1221,7 @@ RA_Create(IMG_CHAR *name,
 		goto hash_fail;
 	}
 
-	OSStringLCopy(pArena->name, name, RA_MAX_NAME_LENGTH);
+	OSStringSCopy(pArena->name, name, RA_MAX_NAME_LENGTH);
 	pArena->pImportAlloc = (imp_alloc!=NULL) ? imp_alloc : &_RequestAllocFail;
 	pArena->pImportFree = imp_free;
 	pArena->pImportHandle = arena_handle;

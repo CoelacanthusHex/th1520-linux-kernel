@@ -110,7 +110,7 @@ void DeviceMemSetBytes(void *pvDest, IMG_UINT8 ui8Value, size_t ui32Size);
 void DeviceMemCopyBytes(void *pvDst, const void *pvSrc, size_t ui32Size);
 
 /**************************************************************************/ /*!
-@Function       StringLCopy
+@Function       StringSCopy
 @Description    Copy at most uDataSize-1 bytes from pszSrc to pszDest.
                 If no null byte ('\0') is contained within the first uDataSize-1
                 characters of the source string, the destination string will be
@@ -120,9 +120,9 @@ void DeviceMemCopyBytes(void *pvDst, const void *pvSrc, size_t ui32Size);
 @Input          pszDest       char pointer to the destination string
 @Input          pszSrc        const char pointer to the source string
 @Input          uDataSize     the maximum number of bytes to be copied
-@Return         Size of the source string
+@Return         Size of the source string, or -E2BIG if it was truncated.
  */ /**************************************************************************/
-size_t StringLCopy(IMG_CHAR *pszDest, const IMG_CHAR *pszSrc, size_t uDataSize);
+size_t StringSCopy(IMG_CHAR *pszDest, const IMG_CHAR *pszSrc, size_t uDataSize);
 
 #if defined(__arm64__) || defined(__aarch64__) || defined(PVRSRV_DEVMEM_TEST_SAFE_MEMSETCPY)
 #if defined(__GNUC__)
@@ -283,10 +283,10 @@ size_t StringLCopy(IMG_CHAR *pszDest, const IMG_CHAR *pszSrc, size_t uDataSize);
 @Input          c     the maximum number of bytes to be copied
 @Return         Size of the source string
  */ /**************************************************************************/
-#if defined(__QNXNTO__) || (defined(__linux__) && defined(__KERNEL__) && !defined(DEBUG))
-#define OSStringLCopy(a,b,c) strlcpy((a), (b), (c))
+#if defined(__linux__) && defined(__KERNEL__) && !defined(DEBUG)
+#define OSStringSCopy(a,b,c) strscpy((a), (b), (c))
 #else /* defined(__QNXNTO__) ... */
-#define OSStringLCopy(a,b,c) StringLCopy((a), (b), (c))
+#define OSStringSCopy(a,b,c) StringSCopy((a), (b), (c))
 #endif /* defined(__QNXNTO__) ... */
 
 #ifdef __cplusplus

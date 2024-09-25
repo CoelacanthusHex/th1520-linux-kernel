@@ -131,7 +131,7 @@ PVRSRV_ERROR DIInit(void)
 
 	_g_psRootGroup->pszName = OSAllocMem(sizeof(ROOT_GROUP_NAME));
 	PVR_LOG_GOTO_IF_NOMEM(_g_psRootGroup->pszName, eError, cleanup_name_);
-	OSStringLCopy(_g_psRootGroup->pszName, ROOT_GROUP_NAME,
+	OSStringSCopy(_g_psRootGroup->pszName, ROOT_GROUP_NAME,
 				  sizeof(ROOT_GROUP_NAME));
 
 	dllist_init(&_g_psRootGroup->sListNode);
@@ -444,7 +444,7 @@ PVRSRV_ERROR DICreateGroup(const IMG_CHAR *pszName,
 	uSize = OSStringLength(pszName) + 1;
 	psGroup->pszName = OSAllocMem(uSize * sizeof(*psGroup->pszName));
 	PVR_LOG_GOTO_IF_NOMEM(psGroup->pszName, eError, cleanup_name_);
-	OSStringLCopy(psGroup->pszName, pszName, uSize);
+	OSStringSCopy(psGroup->pszName, pszName, uSize);
 
 	psGroup->psParent = psParent;
 	dllist_init(&psGroup->sGroupList);

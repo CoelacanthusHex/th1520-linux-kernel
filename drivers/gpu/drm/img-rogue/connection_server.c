@@ -182,7 +182,7 @@ PVRSRV_ERROR PVRSRVCommonConnectionConnect(void **ppvPrivData, void *pvOSData)
 	psConnection->pid = OSGetCurrentClientProcessIDKM();
 	psConnection->vpid = OSGetCurrentVirtualProcessID();
 	psConnection->tid = (IMG_UINT32)OSGetCurrentClientThreadIDKM();
-	OSStringLCopy(psConnection->pszProcName, OSGetCurrentClientProcessNameKM(), PVRSRV_CONNECTION_PROCESS_NAME_LEN);
+	OSStringSCopy(psConnection->pszProcName, OSGetCurrentClientProcessNameKM(), PVRSRV_CONNECTION_PROCESS_NAME_LEN);
 
 #if defined(SUPPORT_DMA_TRANSFER)
 	OSLockCreate(&psConnection->hDmaReqLock);
@@ -436,7 +436,7 @@ void PVRSRVConnectionDebugNotify(PVRSRV_DEVICE_NODE *psDevNode,
 					   CONNECTIONS_PREFIX,
 					   (unsigned char)psDevNode->sDevId.ui32InternalID,
 					   (unsigned char)psDevNode->sDevId.i32OsDeviceID);
-		OSStringLCopy(sActiveConnections+uiPos, szTmpConBuff, uiSize);
+		OSStringSCopy(sActiveConnections+uiPos, szTmpConBuff, uiSize);
 
 		/* Move the write offset to the end of the current string */
 		uiPos += i;
@@ -453,7 +453,7 @@ void PVRSRVConnectionDebugNotify(PVRSRV_DEVICE_NODE *psDevNode,
 			i = MIN(MAX_DEBUG_DUMP_CONNECTION_STR_LEN, i);
 			bPrinted = IMG_FALSE;
 
-			OSStringLCopy(sActiveConnections+uiPos, sTmpBuff, uiSize);
+			OSStringSCopy(sActiveConnections+uiPos, sTmpBuff, uiSize);
 
 			/* Move the write offset to the end of the current string */
 			uiPos += i;
