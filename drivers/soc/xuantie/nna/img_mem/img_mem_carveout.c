@@ -199,37 +199,24 @@ static void *carveout_kmap_dmabuf(struct dma_buf *buf, unsigned long page)
 static int carveout_heap_map_km(struct heap *heap, struct buffer *buffer);
 static int carveout_heap_unmap_km(struct heap *heap, struct buffer *buffer);
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 11, 0)
-static void *carveout_vmap_dmabuf(struct dma_buf *buf)
-#elif LINUX_VERSION_CODE < KERNEL_VERSION(5, 18, 0)
-static int carveout_vmap_dmabuf(struct dma_buf *buf, struct dma_buf_map *map)
-#else
 static int carveout_vmap_dmabuf(struct dma_buf *buf, struct iosys_map *map)
-#endif
 {
 	struct buffer *buffer = buf->priv;
 	struct heap *heap;
 
 	if (!buffer)
-		return NULL;
+		return 0;
 
 	heap = buffer->heap;
 
 	if (carveout_heap_map_km(heap, buffer))
-		return NULL;
+		return 0;
 
 	pr_debug("%s:%d buffer %d kptr 0x%p\n", __func__, __LINE__,
 		buffer->id, buffer->kptr);
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 11, 0)
-	return buffer->kptr;
-#elif LINUX_VERSION_CODE < KERNEL_VERSION(5, 18, 0)
-	dma_buf_map_set_vaddr(map, buffer->kptr);
-	return (buffer->kptr == NULL) ? -ENOMEM : 0;
-#else
 	iosys_map_set_vaddr(map, buffer->kptr);
-    return (buffer->kptr == NULL) ? -ENOMEM : 0;
-#endif
+	return (buffer->kptr == NULL) ? -ENOMEM : 0;
 }
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5, 11, 0)
