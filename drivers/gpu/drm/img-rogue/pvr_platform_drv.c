@@ -218,7 +218,7 @@ err_drm_dev_put:
 #endif
 }
 
-static int pvr_remove(struct platform_device *pdev)
+static void pvr_remove(struct platform_device *pdev)
 {
 	struct drm_device *ddev = platform_get_drvdata(pdev);
 
@@ -237,7 +237,6 @@ static int pvr_remove(struct platform_device *pdev)
 #else
 	drm_put_dev(ddev);
 #endif
-	return 0;
 }
 
 static void pvr_shutdown(struct platform_device *pdev)
