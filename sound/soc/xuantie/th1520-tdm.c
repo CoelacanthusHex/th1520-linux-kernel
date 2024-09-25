@@ -580,14 +580,13 @@ static int th1520_tdm_probe(struct platform_device *pdev)
     return ret;
 }
 
-static int th1520_tdm_remove(struct platform_device *pdev)
+static void th1520_tdm_remove(struct platform_device *pdev)
 {
     struct th1520_tdm_priv *tdm_priv = dev_get_drvdata(&pdev->dev);
     pm_runtime_disable(&pdev->dev);
     if (!pm_runtime_status_suspended(&pdev->dev))
             th1520_tdm_runtime_suspend(&pdev->dev);
     clk_disable_unprepare(tdm_priv->clk);
-    return 0;
 }
 
 static const struct dev_pm_ops th1520_tdm_pm_ops = {
