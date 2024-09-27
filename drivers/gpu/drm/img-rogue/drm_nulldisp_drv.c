@@ -2400,16 +2400,16 @@ const struct drm_gem_object_funcs nulldisp_gem_funcs = {
 static const struct drm_ioctl_desc nulldisp_ioctls[] = {
 	DRM_IOCTL_DEF_DRV(NULLDISP_GEM_CREATE,
 			  nulldisp_gem_object_create_ioctl,
-			  DRM_AUTH | DRM_UNLOCKED),
+			  DRM_AUTH),
 	DRM_IOCTL_DEF_DRV(NULLDISP_GEM_MMAP,
 			  nulldisp_gem_object_mmap_ioctl,
-			  DRM_AUTH | DRM_UNLOCKED),
+			  DRM_AUTH),
 	DRM_IOCTL_DEF_DRV(NULLDISP_GEM_CPU_PREP,
 			  nulldisp_gem_object_cpu_prep_ioctl,
-			  DRM_AUTH | DRM_UNLOCKED),
+			  DRM_AUTH),
 	DRM_IOCTL_DEF_DRV(NULLDISP_GEM_CPU_FINI,
 			  nulldisp_gem_object_cpu_fini_ioctl,
-			  DRM_AUTH | DRM_UNLOCKED),
+			  DRM_AUTH),
 };
 
 static int nulldisp_gem_mmap(struct file *file, struct vm_area_struct *vma)

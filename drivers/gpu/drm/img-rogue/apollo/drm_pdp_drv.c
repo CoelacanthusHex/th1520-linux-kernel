@@ -555,13 +555,13 @@ static int pdp_gem_dumb_create(struct drm_file *file,
 
 static const struct drm_ioctl_desc pdp_ioctls[] = {
 	DRM_IOCTL_DEF_DRV(PDP_GEM_CREATE, pdp_gem_object_create_ioctl,
-				DRM_AUTH | DRM_UNLOCKED | DRM_RENDER_ALLOW),
+				DRM_AUTH | DRM_RENDER_ALLOW),
 	DRM_IOCTL_DEF_DRV(PDP_GEM_MMAP, pdp_gem_object_mmap_ioctl,
-				DRM_AUTH | DRM_UNLOCKED),
+				DRM_AUTH),
 	DRM_IOCTL_DEF_DRV(PDP_GEM_CPU_PREP, pdp_gem_object_cpu_prep_ioctl,
-				DRM_AUTH | DRM_UNLOCKED),
+				DRM_AUTH),
 	DRM_IOCTL_DEF_DRV(PDP_GEM_CPU_FINI, pdp_gem_object_cpu_fini_ioctl,
-				DRM_AUTH | DRM_UNLOCKED),
+				DRM_AUTH),
 };
 
 static const struct file_operations pdp_driver_fops = {

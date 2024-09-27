@@ -261,23 +261,20 @@ static void pvr_drm_release(struct drm_device *ddev, struct drm_file *dfile)
 	module_put(THIS_MODULE);
 }
 
-/*
- * The DRM global lock is taken for ioctls unless the DRM_UNLOCKED flag is set.
- */
 static struct drm_ioctl_desc pvr_drm_ioctls[] = {
 	DRM_IOCTL_DEF_DRV(PVR_SRVKM_CMD, PVRSRV_BridgeDispatchKM,
-			  DRM_RENDER_ALLOW | DRM_UNLOCKED),
+			  DRM_RENDER_ALLOW),
 	DRM_IOCTL_DEF_DRV(PVR_SRVKM_INIT, drm_pvr_srvkm_init,
-			  DRM_RENDER_ALLOW | DRM_UNLOCKED),
+			  DRM_RENDER_ALLOW),
 #if defined(SUPPORT_NATIVE_FENCE_SYNC) && !defined(USE_PVRSYNC_DEVNODE)
 	DRM_IOCTL_DEF_DRV(PVR_SYNC_RENAME_CMD, pvr_sync_rename_ioctl,
-			  DRM_RENDER_ALLOW | DRM_UNLOCKED),
+			  DRM_RENDER_ALLOW),
 	DRM_IOCTL_DEF_DRV(PVR_SYNC_FORCE_SW_ONLY_CMD, pvr_sync_force_sw_only_ioctl,
-			  DRM_RENDER_ALLOW | DRM_UNLOCKED),
+			  DRM_RENDER_ALLOW),
 	DRM_IOCTL_DEF_DRV(PVR_SW_SYNC_CREATE_FENCE_CMD, pvr_sw_sync_create_fence_ioctl,
-			  DRM_RENDER_ALLOW | DRM_UNLOCKED),
+			  DRM_RENDER_ALLOW),
 	DRM_IOCTL_DEF_DRV(PVR_SW_SYNC_INC_CMD, pvr_sw_sync_inc_ioctl,
-			  DRM_RENDER_ALLOW | DRM_UNLOCKED),
+			  DRM_RENDER_ALLOW),
 #endif
 };
 
