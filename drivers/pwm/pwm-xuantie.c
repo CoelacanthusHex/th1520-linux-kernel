@@ -53,7 +53,7 @@
 #define XUANTIE_PWM_STATUS_BUSY		BIT(8)
 
 struct xuantie_pwm_chip {
-	struct pwm_chip chip;
+	struct pwm_chip *chip;
 	void __iomem *mmio_base;
 	struct clk *clk;
 	u8 channel_ever_started;
@@ -61,7 +61,7 @@ struct xuantie_pwm_chip {
 
 static inline struct xuantie_pwm_chip *xuantie_pwm_from_chip(struct pwm_chip *chip)
 {
-	return container_of(chip, struct xuantie_pwm_chip, chip);
+	return pwmchip_get_drvdata(chip);
 }
 
 static int xuantie_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
@@ -223,19 +223,20 @@ static int xuantie_pwm_probe(struct platform_device *pdev)
 	priv->clk = devm_clk_get_enabled(&pdev->dev, NULL);
 	if (IS_ERR(priv->clk))
 		return PTR_ERR(priv->clk);
-
-	priv->chip.ops = &xuantie_pwm_ops;
-	priv->chip.dev = pdev->dev;
-	priv->chip.npwm = XUANTIE_PWM_MAX_NUM;
+	
+	priv->chip = devm_pwmchip_alloc(&pdev->dev, XUANTIE_PWM_MAX_NUM, sizeof(*priv));
+	if (IS_ERR(priv->chip))
+		return PTR_ERR(priv->chip);
+	priv->chip->ops = &xuantie_pwm_ops;
 
 	/* check whether PWM is ever started or not */
-	for (i = 0; i < priv->chip.npwm; i++) {
+	for (i = 0; i < priv->chip->npwm; i++) {
 		val = readl(priv->mmio_base + XUANTIE_PWM_FP(i));
 		if (val)
 			priv->channel_ever_started |= 1 << i;
 	}
 
-	ret = devm_pwmchip_add(&pdev->dev, &priv->chip);
+	ret = devm_pwmchip_add(&pdev->dev, priv->chip);
 	if (ret)
 		return ret;
 
